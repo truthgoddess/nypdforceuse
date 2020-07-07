@@ -1,18 +1,25 @@
-const User = require('./user')
+const Command = require('./command')
+const SubjectInjury = require('./subjectInjury')
+const OfficerInjury = require('./officerInjury')
+const IncidentsForceType = require('./incidentsForceType')
+const IncidentsBasisEncounter = require('./incidentsBasisEncounter')
+const TimeFrame = require('./timeFrame')
+const InjuryType = require('./injuryType')
+const EncounterCategory = require('./encounterCategory')
+const ForceCategory = require('./forceCategory')
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
+/*
+ *    put associations here: ex. BlogPost.belongsTo(User)
  */
 
-/**
- * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
- * for example, we can say: const {User} = require('../db/models')
- * instead of: const User = require('../db/models/user')
- */
 module.exports = {
-  User
+  Command,
+  SubjectInjury,
+  OfficerInjury,
+  IncidentsForceType,
+  IncidentsBasisEncounter,
+  TimeFrame,
+  InjuryType,
+  EncounterCategory,
+  ForceCategory
 }
