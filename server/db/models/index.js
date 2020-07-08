@@ -8,10 +8,6 @@ const InjuryType = require('./injuryType')
 const EncounterCategory = require('./encounterCategory')
 const ForceCategory = require('./forceCategory')
 
-/*
- *    put associations here: ex. BlogPost.belongsTo(User)
- */
-
 Command.hasMany(SubjectInjury)
 SubjectInjury.belongsTo(Command)
 Command.hasMany(OfficerInjury)
@@ -44,5 +40,5 @@ module.exports = {
   TimeFrame,
   InjuryType,
   EncounterCategory,
-  ForceCategory
+  ForceCategory,
 }

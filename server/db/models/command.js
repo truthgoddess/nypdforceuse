@@ -2,14 +2,11 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Command = db.define('command', {
-  commandType: {
+  commandName: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
   },
-  codeId: {
-    type: Sequelize.STRING
-  }
 })
 
 module.exports = Command
