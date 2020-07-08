@@ -12,6 +12,29 @@ const ForceCategory = require('./forceCategory')
  *    put associations here: ex. BlogPost.belongsTo(User)
  */
 
+Command.hasMany(SubjectInjury)
+SubjectInjury.belongsTo(Command)
+Command.hasMany(OfficerInjury)
+OfficerInjury.belongsTo(Command)
+Command.hasMany(IncidentsForceType)
+IncidentsForceType.belongsTo(Command)
+TimeFrame.hasMany(SubjectInjury)
+SubjectInjury.belongsTo(TimeFrame)
+TimeFrame.hasMany(OfficerInjury)
+OfficerInjury.belongsTo(TimeFrame)
+TimeFrame.hasMany(IncidentsForceType)
+IncidentsForceType.belongsTo(TimeFrame)
+TimeFrame.hasMany(IncidentsBasisEncounter)
+IncidentsBasisEncounter.belongsTo(TimeFrame)
+InjuryType.hasMany(SubjectInjury)
+SubjectInjury.belongsTo(InjuryType)
+InjuryType.hasMany(OfficerInjury)
+OfficerInjury.belongsTo(InjuryType)
+ForceCategory.hasMany(IncidentsForceType)
+IncidentsForceType.belongsTo(ForceCategory)
+EncounterCategory.hasMany(IncidentsBasisEncounter)
+IncidentsBasisEncounter.belongsTo(EncounterCategory)
+
 module.exports = {
   Command,
   SubjectInjury,
