@@ -1,4 +1,4 @@
-const incidentsForceType = [
+const incidentsForceTypeData = [
   {
     year: 2020,
     quarter: 1,
@@ -2601,4 +2601,4 @@ const incidentsForceType = [
   },
 ]
 
-module.exports = {incidentsForceType}
+module.exports = {incidentsForceTypeData}

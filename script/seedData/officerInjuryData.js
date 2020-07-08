@@ -1,4 +1,4 @@
-const officerInjury = [
+const officerInjuryData = [
   {
     year: 2020,
     quarter: 1,
@@ -1649,4 +1649,4 @@ const officerInjury = [
   },
 ]
 
-module.exports = {officerInjury}
+module.exports = {officerInjuryData}

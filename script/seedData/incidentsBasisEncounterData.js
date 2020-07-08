@@ -1,4 +1,4 @@
-const incidentsBasisEncounter = [
+const incidentsBasisEncounterData = [
   {
     basisForEncounter: 'CRIME/VIOLATION IN PROGRESS',
     Count: 782,
@@ -77,4 +77,4 @@ const incidentsBasisEncounter = [
   },
 ]
 
-module.exports = {incidentsBasisEncounter}
+module.exports = {incidentsBasisEncounterData}

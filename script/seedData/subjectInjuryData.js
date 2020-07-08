@@ -1,4 +1,4 @@
-const subjectInjury = [
+const subjectInjuryData = [
   {
     year: 2020,
     quarter: 1,
@@ -1529,4 +1529,4 @@ const subjectInjury = [
   },
 ]
 
-module.exports = {subjectInjury}
+module.exports = {subjectInjuryData}

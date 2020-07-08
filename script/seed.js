@@ -1,19 +1,71 @@
 'use strict'
+const {
+  officerInjuryData,
+  subjectInjuryData,
+  incidentsBasisEncounterData,
+  incidentsForceTypeData,
+} = require('./seedData')
+
+const {
+  Command,
+  SubjectInjury,
+  OfficerInjury,
+  IncidentsForceType,
+  IncidentsBasisEncounter,
+  TimeFrame,
+  InjuryType,
+  EncounterCategory,
+  ForceCategory,
+} = require('../server/db/models')
 
 const db = require('../server/db')
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
-
-  // const users = await Promise.all([
-  //   User.create({email: 'cody@email.com', password: '123'}),
-  //   User.create({email: 'murphy@email.com', password: '123'})
-  // ])
-
-  // console.log(`seeded ${users.length} users`)
-  // console.log(`seeded successfully`)
+  //officer injury seed
+  let thing = await Promise.all(
+    officerInjuryData.map(async (item) => {
+      try {
+        let [timeFrame, timeFrameCreated] = await TimeFrame.findOrCreate({
+          where: {year: item.year, quarter: item.quarter},
+        })
+        let [command, commandCreated] = await Command.findOrCreate({
+          where: {commandName: item.command},
+        })
+        let [injuryType, injuryTypeCreated] = await InjuryType.findOrCreate({
+          where: {type: item.officerInjury}, //should have named it type, but...
+        })
+        let officerInjuryIncident = await OfficerInjury.create({
+          onDuty: item.onDuty,
+          offDuty: item.offDuty,
+          injuryTypeId: injuryType.id,
+          commandId: command.id,
+          timeFrameId: timeFrame.id,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  )
 }
+
+//subject injury seed
+// subjectInjury.forEach((item) => {})
+
+//incidentsBasisEncounter seed
+// incidentsBasisEncounter.forEach((item) => {})
+
+//incidentsForceType seed
+// incidentsForceType.forEach((item) => {})
+
+// const users = await Promise.all([
+//   User.create({email: 'cody@email.com', password: '123'}),
+//   User.create({email: 'murphy@email.com', password: '123'})
+// ])
+
+// console.log(`seeded ${users.length} users`)
+// console.log(`seeded successfully`)
 
 // We've separated the `seed` function from the `runSeed` function.
 // This way we can isolate the error handling and exit trapping.
