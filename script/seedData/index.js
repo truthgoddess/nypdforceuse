@@ -1,11 +1,11 @@
-const {incidentsBasisEncounter} = require('./incidentsBasisEncounter')
-const {officerInjury} = require('./officerInjury')
-const {incidentsForceType} = require('./incidentsForceType')
-const {subjectInjury} = require('./subjectInjury')
+const {incidentsBasisEncounterData} = require('./incidentsBasisEncounterData')
+const {officerInjuryData} = require('./officerInjuryData')
+const {incidentsForceTypeData} = require('./incidentsForceTypeData')
+const {subjectInjuryData} = require('./subjectInjuryData')
 
 module.exports = {
-  incidentsBasisEncounter,
-  officerInjury,
-  incidentsForceType,
-  subjectInjury,
+  incidentsBasisEncounterData,
+  officerInjuryData,
+  incidentsForceTypeData,
+  subjectInjuryData,
 }
