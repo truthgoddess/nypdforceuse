@@ -34,7 +34,7 @@ async function seed() {
           where: {commandName: item.command},
         })
         let [injuryType] = await InjuryType.findOrCreate({
-          where: {type: item.officerInjury}, //should have named it type, but...
+          where: {type: item.officerInjury},
         })
         await OfficerInjury.create({
           onDuty: item.onDuty,
@@ -60,7 +60,7 @@ async function seed() {
           where: {commandName: item.command},
         })
         let [injuryType] = await InjuryType.findOrCreate({
-          where: {type: item.subjectInjury}, //should have named it type, but...
+          where: {type: item.subjectInjury},
         })
         await SubjectInjury.create({
           onDuty: item.onDuty,
@@ -74,10 +74,54 @@ async function seed() {
       }
     })
   )
+  //incidentsBasisEncounter seed
+  await Promise.all(
+    incidentsForceTypeData.map(async (item) => {
+      try {
+        let [timeFrame] = await TimeFrame.findOrCreate({
+          where: {year: item.year, quarter: item.quarter},
+        })
+        let [command] = await Command.findOrCreate({
+          where: {commandName: item.command},
+        })
+        let [forceCategory] = await ForceCategory.findOrCreate({
+          where: {type: item.forceCategory},
+        })
+        await IncidentsForceType.create({
+          onDuty: item.onDuty,
+          offDuty: item.offDuty,
+          forceCategoryId: forceCategory.id,
+          commandId: command.id,
+          timeFrameId: timeFrame.id,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  )
+  //incidentsForceType seed
+  await Promise.all(
+    incidentsBasisEncounterData.map(async (item) => {
+      try {
+        let [timeFrame] = await TimeFrame.findOrCreate({
+          where: {year: item.year, quarter: item.quarter},
+        })
+        let [encounterCategory] = await EncounterCategory.findOrCreate({
+          where: {type: item.basisForEncounter},
+        })
+        await IncidentsBasisEncounter.create({
+          count: item.count,
+          encounterCategoryId: encounterCategory.id,
+          timeFrameId: timeFrame.id,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  )
   console.log('db synced!')
 }
 
-//incidentsBasisEncounter seed
 // incidentsBasisEncounter.forEach((item) => {})
 
 //incidentsForceType seed
