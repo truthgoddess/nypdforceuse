@@ -22,21 +22,21 @@ const db = require('../server/db')
 
 async function seed() {
   await db.sync({force: true})
-  console.log('db synced!')
+
   //officer injury seed
-  let thing = await Promise.all(
+  await Promise.all(
     officerInjuryData.map(async (item) => {
       try {
-        let [timeFrame, timeFrameCreated] = await TimeFrame.findOrCreate({
+        let [timeFrame] = await TimeFrame.findOrCreate({
           where: {year: item.year, quarter: item.quarter},
         })
-        let [command, commandCreated] = await Command.findOrCreate({
+        let [command] = await Command.findOrCreate({
           where: {commandName: item.command},
         })
-        let [injuryType, injuryTypeCreated] = await InjuryType.findOrCreate({
+        let [injuryType] = await InjuryType.findOrCreate({
           where: {type: item.officerInjury}, //should have named it type, but...
         })
-        let officerInjuryIncident = await OfficerInjury.create({
+        await OfficerInjury.create({
           onDuty: item.onDuty,
           offDuty: item.offDuty,
           injuryTypeId: injuryType.id,
@@ -48,10 +48,34 @@ async function seed() {
       }
     })
   )
-}
 
-//subject injury seed
-// subjectInjury.forEach((item) => {})
+  //subjectInjury seed
+  await Promise.all(
+    subjectInjuryData.map(async (item) => {
+      try {
+        let [timeFrame] = await TimeFrame.findOrCreate({
+          where: {year: item.year, quarter: item.quarter},
+        })
+        let [command] = await Command.findOrCreate({
+          where: {commandName: item.command},
+        })
+        let [injuryType] = await InjuryType.findOrCreate({
+          where: {type: item.subjectInjury}, //should have named it type, but...
+        })
+        await SubjectInjury.create({
+          onDuty: item.onDuty,
+          offDuty: item.offDuty,
+          injuryTypeId: injuryType.id,
+          commandId: command.id,
+          timeFrameId: timeFrame.id,
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  )
+  console.log('db synced!')
+}
 
 //incidentsBasisEncounter seed
 // incidentsBasisEncounter.forEach((item) => {})
