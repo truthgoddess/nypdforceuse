@@ -48,6 +48,26 @@ router.get('/allYear/allQuarter/allDuty/allCommand', async function (
   next
 ) {
   try {
+    let officerInjuriesData = await OfficerInjury.findAll({
+      attributes: ['onDuty', 'offDuty'],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    let subjectInjuriesData = await SubjectInjury.findAll({
+      attributes: ['onDuty', 'offDuty'],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    res.json({
+      officerData: officerInjuriesData,
+      subjectData: subjectInjuriesData,
+    })
     console.log(
       'api/graphData/allInjury/allYear/allQuarter/allDuty/allCommand route'
     )
