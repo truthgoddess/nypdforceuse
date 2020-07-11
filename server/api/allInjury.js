@@ -77,12 +77,37 @@ router.get('/allYear/allQuarter/allDuty/allCommand', async function (
 })
 
 //2  a      a      a       :  <--All Time, All Injuries, Off + On Duty, Specific Command
-router.get('allYear/AllQuarter/allDuty/:command', async function (
+router.get('/allYear/AllQuarter/allDuty/:command', async function (
   req,
   res,
   next
 ) {
   try {
+    let command = await Command.findOne({
+      where: {commandName: req.params.command},
+    })
+    let officerInjuriesData = await OfficerInjury.findAll({
+      where: {commandId: command.id},
+      attributes: ['onDuty', 'offDuty'],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    let subjectInjuriesData = await SubjectInjury.findAll({
+      where: {commandId: command.id},
+      attributes: ['onDuty', 'offDuty'],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    res.json({
+      officerData: officerInjuriesData,
+      subjectData: subjectInjuriesData,
+    })
     console.log(
       'api/graphData/allInjury/allYear/AllQuarter/allDuty/:command route'
     )
@@ -98,6 +123,29 @@ router.get('/allYear/allQuarter/:duty/allCommand', async function (
   next
 ) {
   try {
+    let duty
+    if (req.params.duty === 'on') duty = 'onDuty'
+    if (req.params.duty === 'off') duty = 'offDuty'
+    let officerInjuriesData = await OfficerInjury.findAll({
+      attributes: [duty],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    let subjectInjuriesData = await SubjectInjury.findAll({
+      attributes: [duty],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: InjuryType, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    res.json({
+      officerData: officerInjuriesData,
+      subjectData: subjectInjuriesData,
+    })
     console.log(
       'api/graphData/allInjury/allYear/allQuarter/:duty/allCommand route'
     )
@@ -113,6 +161,7 @@ router.get('/allYear/allQuarter/:duty/:command', async function (
   next
 ) {
   try {
+    res.json('hello')
     console.log(
       'api/graphData/allInjury/allYear/allQuarter/:duty/:command route'
     )
@@ -128,6 +177,44 @@ router.get('/allYear/:quarter/allDuty/allCommand/', async function (
   next
 ) {
   try {
+    let timeFrame = await TimeFrame.findAll({
+      where: {quarter: req.params.quarter},
+    })
+    let timeFrameIds = timeFrame.map((item) => item.id)
+    let officerInjuriesData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      officerInjuriesData = [
+        ...officerInjuriesData,
+        ...(await OfficerInjury.findAll({
+          where: {timeFrameId: timeFrameIds[i]},
+          attributes: ['onDuty', 'offDuty'],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: InjuryType, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    let subjectInjuriesData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      subjectInjuriesData = [
+        ...subjectInjuriesData,
+        ...(await SubjectInjury.findAll({
+          where: {timeFrameId: timeFrameIds[i]},
+          attributes: ['onDuty', 'offDuty'],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: InjuryType, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    res.json({
+      officerData: officerInjuriesData,
+      subjectData: subjectInjuriesData,
+    })
     console.log(
       'api/graphData/allInjury/allYear/:quarter/allDuty/allCommand/ route'
     )
@@ -152,7 +239,7 @@ router.get('/allYear/:quarter/allDuty/:command', async function (
 })
 
 //8  a      :      :       a  <--All Years, Specific Quarter, All Injuries, Specific Duty, All Command
-router.get('allYear/:quarter/:duty/allCommand', async function (
+router.get('/allYear/:quarter/:duty/allCommand', async function (
   req,
   res,
   next

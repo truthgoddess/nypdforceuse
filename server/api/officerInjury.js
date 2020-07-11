@@ -47,7 +47,7 @@ router.get('/allYear/allQuarter/allDuty/allCommand', async function (
 })
 
 //2  a      a      a       :  <--All Time, All Injuries, Off + On Duty, Specific Command
-router.get('allYear/AllQuarter/allDuty/:command', async function (
+router.get('/allYear/AllQuarter/allDuty/:command', async function (
   req,
   res,
   next
@@ -122,7 +122,7 @@ router.get('/allYear/:quarter/allDuty/:command', async function (
 })
 
 //8  a      :      :       a  <--All Years, Specific Quarter, All Injuries, Specific Duty, All Command
-router.get('allYear/:quarter/:duty/allCommand', async function (
+router.get('/allYear/:quarter/:duty/allCommand', async function (
   req,
   res,
   next
