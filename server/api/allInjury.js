@@ -503,6 +503,47 @@ router.get('/:year/allQuarter/:duty/allCommand', async function (
   next
 ) {
   try {
+    let duty
+    if (req.params.duty === 'on') duty = 'onDuty'
+    if (req.params.duty === 'off') duty = 'offDuty'
+    let timeFrame = await TimeFrame.findAll({
+      where: {year: req.params.year},
+    })
+    let timeFrameIds = timeFrame.map((item) => item.id)
+    let officerInjuriesData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      officerInjuriesData = [
+        ...officerInjuriesData,
+        ...(await OfficerInjury.findAll({
+          where: {timeFrameId: timeFrameIds[i]},
+          attributes: [duty],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: InjuryType, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    let subjectInjuriesData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      subjectInjuriesData = [
+        ...subjectInjuriesData,
+        ...(await SubjectInjury.findAll({
+          where: {timeFrameId: timeFrameIds[i]},
+          attributes: [duty],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: InjuryType, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    res.json({
+      officerData: officerInjuriesData,
+      subjectData: subjectInjuriesData,
+    })
     console.log('api/graphData/allInjury/:year/allQuarter/:duty/allCommand')
   } catch (error) {
     next(error)
