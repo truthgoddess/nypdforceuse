@@ -24,41 +24,6 @@ router.use('/incidentsBasisEncounter', require('./incidentsBasisEncounter'))
 //quarter options: all, 1, 2, 3, 4
 //onOffDuty options: all, on, off
 
-router.get('/AllInjury/:year/:quarter/:onOffDuty/:command', function (
-  req,
-  res,
-  next
-) {
-  try {
-    console.log('All Injury')
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/IncidentsForceType/:year/:quarter/:onOffDuty/:command', function (
-  req,
-  res,
-  next
-) {
-  try {
-    console.log('Incidents Force Type')
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get(
-  '/IncidentsBasisEncounter/:year/:quarter/:onOffDuty/:command',
-  function (req, res, next) {
-    try {
-      console.log('Incidents Basis Encounter')
-    } catch (error) {
-      next(error)
-    }
-  }
-)
-
 // router.get('/', async (req, res, next) => {
 //   try {
 //     const users = await User.findAll({
