@@ -576,6 +576,9 @@ router.get('/:year/:quarter/:duty/allCommand', async function (req, res, next) {
     res.json({
       forceTypeData: incidentsForceTypeData,
     })
+    console.log(
+      'api/graphData/incidentsForceType/:year/:quarter/:duty/allCommand'
+    )
   } catch (error) {
     next(error)
   }
@@ -584,6 +587,49 @@ router.get('/:year/:quarter/:duty/allCommand', async function (req, res, next) {
 //16 :      :      :       :  <--Specific Year, Specific Quarters, All Injuries, Specific Duty, Specific Command
 router.get('/:year/:quarter/:duty/:command', async function (req, res, next) {
   try {
+    let timeFrame = await TimeFrame.findAll({
+      where: {year: req.params.year, quarter: req.params.quarter},
+    })
+    let command = await Command.findOne({
+      where: {commandName: req.params.command},
+    })
+    let duty
+    if (req.params.duty === 'on') duty = 'onDuty'
+    if (req.params.duty === 'off') duty = 'offDuty'
+    let timeFrameIds = timeFrame.map((item) => item.id)
+    let incidentsForceTypeData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      incidentsForceTypeData = [
+        ...incidentsForceTypeData,
+        ...(await IncidentsForceType.findAll({
+          where: {timeFrameId: timeFrameIds[i], commandId: command.id},
+          attributes: [duty],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: ForceCategory, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    let subjectInjuriesData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      subjectInjuriesData = [
+        ...subjectInjuriesData,
+        ...(await SubjectInjury.findAll({
+          where: {timeFrameId: timeFrameIds[i], commandId: command.id},
+          attributes: [duty],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: InjuryType, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+    res.json({
+      forceTypeData: incidentsForceTypeData,
+    })
     console.log(
       'api/graphData/incidentsForceType/:year/:quarter/:duty/:command'
     )
