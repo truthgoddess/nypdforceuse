@@ -64,6 +64,21 @@ router.get('/allYear/AllQuarter/allDuty/:command', async function (
   next
 ) {
   try {
+    let command = await Command.findOne({
+      where: {commandName: req.params.command},
+    })
+    let incidentsForceTypeData = await IncidentsForceType.findAll({
+      where: {commandId: command.id},
+      attributes: ['onDuty', 'offDuty'],
+      include: [
+        {model: Command, attributes: ['commandName']},
+        {model: ForceCategory, attributes: ['type']},
+        {model: TimeFrame, attributes: ['year', 'quarter']},
+      ],
+    })
+    res.json({
+      forceTypeData: incidentsForceTypeData,
+    })
     console.log(
       'api/graphData/incidentsForceType/allYear/AllQuarter/allDuty/:command route'
     )
