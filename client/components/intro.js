@@ -30,67 +30,90 @@ const languageOptions = [
   {key: 'Vietnamese', text: 'Vietnamese', value: 'Vietnamese'},
 ]
 
-const Intro = () => (
-  <Grid celled padded columns={2} style={{height: '100vh', margin: '10px'}}>
-    <Grid.Row textAlign="center">
-      <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <VictoryBar></VictoryBar>
-      </Grid.Column>
-      <Grid.Column width={4}>
-        <Grid.Row>
-          <Dropdown
-            style={{background: 'white'}}
-            button
-            floating
-            labeled
-            options={languageOptions}
-            search
-            text="time from state"
-          />
+class Intro extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      fullMenuSelection: 'Select Main Graph',
+      injurySelection: 'Select Injuries',
+      dutySelection: 'Select Duty',
+      test: 0,
+    }
+    this.handleFullMenuChange = this.handleFullMenuChange.bind(this)
+  }
+
+  handleFullMenuChange = (e, data) => {
+    console.log(e)
+    this.setState({fullMenuSelection: data.value})
+    console.log(this.state.test)
+  }
+
+  handleInjurySelectionChange = (e) => {}
+
+  handleDutySelectionChange = (e) => {}
+
+  render() {
+    return (
+      <Grid celled padded columns={2} style={{height: '100vh', margin: '10px'}}>
+        <Grid.Row textAlign="center">
+          <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+            <VictoryBar></VictoryBar>
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <Grid.Row>
+              <Dropdown
+                onChange={this.handleFullMenuChange}
+                style={{background: 'white'}}
+                button
+                floating
+                labeled
+                options={this.props.fullMenuOptions}
+                text={this.state.fullMenuSelection}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Dropdown
+                style={{background: 'white'}}
+                button
+                floating
+                labeled
+                options={this.props.injuryOptions}
+                text={this.state.injurySelection}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Dropdown
+                style={{background: 'white'}}
+                button
+                floating
+                labeled
+                options={this.props.dutyOptions}
+                text={this.state.dutySelection}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Dropdown
+                style={{background: 'white'}}
+                button
+                floating
+                labeled
+                options={languageOptions}
+                search
+                text="command from state"
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Button color="black">Save JPEG</Button>
+            </Grid.Row>
+            <Grid.Row>
+              <Button color="black">Copy Data</Button>
+            </Grid.Row>
+          </Grid.Column>
         </Grid.Row>
-        <Grid.Row>
-          <Dropdown
-            style={{background: 'white'}}
-            button
-            floating
-            labeled
-            options={languageOptions}
-            search
-            text="injuries from state"
-          />
-        </Grid.Row>
-        <Grid.Row>
-          <Dropdown
-            style={{background: 'white'}}
-            button
-            floating
-            labeled
-            options={languageOptions}
-            search
-            text="off/on duty from state"
-          />
-        </Grid.Row>
-        <Grid.Row>
-          <Dropdown
-            style={{background: 'white'}}
-            button
-            floating
-            labeled
-            options={languageOptions}
-            search
-            text="command from state"
-          />
-        </Grid.Row>
-        <Grid.Row>
-          <Button color="black">Save JPEG</Button>
-        </Grid.Row>
-        <Grid.Row>
-          <Button color="black">Copy Data</Button>
-        </Grid.Row>
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
-)
+      </Grid>
+    )
+  }
+}
 
 /**
  * CONTAINER
@@ -98,6 +121,9 @@ const Intro = () => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
+    fullMenuOptions: state.graphOption.fullMenuOptions,
+    injuryOptions: state.graphOption.injuryOptions,
+    dutyOptions: state.graphOption.dutyOptions,
   }
 }
 

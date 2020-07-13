@@ -10,8 +10,30 @@ import history from '../history'
  */
 const defaultGraphOption = {
   timeOptions: [], //need to get from DB
-  injuryOptions: ['subject', 'officer'],
-  dutyOptions: ['off', 'on'],
+  fullMenuOptions: [
+    {key: 'allInjury', text: 'All Injuries', value: 'allInjury'},
+    {key: 'subjectInjury', text: 'Subject Injuries', value: 'subjectInjury'},
+    {key: 'officerInjury', text: 'Officer Injuries', value: 'officerInjury'},
+    {
+      key: 'incidentsForceType',
+      text: 'Force Types',
+      value: 'incidentsForceType',
+    },
+    {
+      key: 'incidentsBasisEncounter',
+      text: 'Basis for Encounter',
+      value: 'incidentsBasisEncounter',
+    },
+  ],
+  injuryOptions: [
+    {key: 'allInjury', text: 'All Injuries', value: 'allInjury'},
+    {key: 'subjectInjury', text: 'Subject Injuries', value: 'subjectInjury'},
+    {key: 'officerInjury', text: 'Officer Injuries', value: 'officerInjury'},
+  ],
+  dutyOptions: [
+    {key: 'offDuty', text: 'Off Duty', value: 'offDuty'},
+    {key: 'onDuty', text: 'On Duty', value: 'onDuty'},
+  ],
   commandOptions: [], //need to get from DB
 }
 
