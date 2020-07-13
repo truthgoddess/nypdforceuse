@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const DisplayContainer = () => (
+const DataDisplay = () => (
   <div>
     <h1>READY TO SEE NYPD DATA</h1>
   </div>
@@ -27,12 +27,12 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapState, mapDispatch)(DisplayContainer)
+export default connect(mapState, mapDispatch)(DataDisplay)
 
 /**
  * PROP TYPES
  */
-DisplayContainer.propTypes = {
+DataDisplay.propTypes = {
   //   handleClick: PropTypes.func.isRequired,
   //   isLoggedIn: PropTypes.bool.isRequired
 }
