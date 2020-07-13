@@ -398,6 +398,32 @@ router.get('/:year/allQuarter/:duty/allCommand', async function (
   next
 ) {
   try {
+    let duty
+    if (req.params.duty === 'on') duty = 'onDuty'
+    if (req.params.duty === 'off') duty = 'offDuty'
+    let timeFrame = await TimeFrame.findAll({
+      where: {year: req.params.year},
+    })
+    let timeFrameIds = timeFrame.map((item) => item.id)
+    let incidentsForceTypeData = []
+    for (let i = 0; i < timeFrameIds.length; i++) {
+      incidentsForceTypeData = [
+        ...incidentsForceTypeData,
+        ...(await IncidentsForceType.findAll({
+          where: {timeFrameId: timeFrameIds[i]},
+          attributes: [duty],
+          include: [
+            {model: Command, attributes: ['commandName']},
+            {model: ForceCategory, attributes: ['type']},
+            {model: TimeFrame, attributes: ['year', 'quarter']},
+          ],
+        })),
+      ]
+    }
+
+    res.json({
+      forceTypeData: incidentsForceTypeData,
+    })
     console.log(
       'api/graphData/incidentsForceType/:year/allQuarter/:duty/allCommand'
     )
