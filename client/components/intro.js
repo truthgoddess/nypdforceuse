@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Grid, Dropdown, Input, Button, Form, Select} from 'semantic-ui-react'
+import {Grid, Dropdown, Button, Form, Select} from 'semantic-ui-react'
 import {VictoryBar} from 'victory'
 import {putSelection} from '../store/graphOption'
 
@@ -36,42 +36,25 @@ class Intro extends React.Component {
     super()
     this.state = {
       fullMenuSelection: 'Select Graph Type',
-      injurySelection: 'Select Injuries',
+      timeSelection: 'Select Time',
       dutySelection: 'Select Duty',
-      test: 0,
+      commandSelection: 'Select Command',
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleFullMenuChange = this.handleFullMenuChange.bind(this)
   }
 
-  handleSubmit = (e, data) => {
-    e.preventDefault()
-    console.log('helleoeooeoeoeo')
-    console.log(e.target.fullMenuOptions.value, 'what?')
-  }
-
-  handleChange = (e, data) => {
-    console.log(e.target(), 'event')
-    // let text = data.options.forEach((item) => {
-    //   if (item.key === data.value) return item.text
-    // })
-    // this.setState({
-    //   fullMenuSelection: text,
-    // })
-    //console.log(this.state)
-  }
-
-  handleInjurySelectionChange = (e, data) => {
-    console.log(data.value)
-    let text = data.options.forEach((item) => {
-      if (item.key === data.value) return item.text
+  handleFullMenuChange = async (e, data) => {
+    await this.setState({
+      fullMenuSelection: data.value,
     })
-    this.setState({
-      injurySelection: text,
-    })
+    console.log(this.state)
   }
 
   handleDutySelectionChange = (e) => {}
+
+  handleTimeSelectionChange = (e) => {}
+
+  handleCommandSelectionChange = (e) => {}
 
   render() {
     return (
@@ -82,15 +65,55 @@ class Intro extends React.Component {
           </Grid.Column>
           <Grid.Column width={4}>
             <Grid.Row>
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Field
-                  control={Select}
-                  label="Gender"
-                  options={this.props.fullMenuOptions}
-                  placeholder="Select Graph"
-                />
-                <Form.Field control={Button}>Submit</Form.Field>
-              </Form>
+              <Dropdown
+                fluid
+                name="fullMenuSelection"
+                selection
+                placeholder="Select Chart"
+                onChange={this.handleFullMenuChange}
+                style={{background: 'white'}}
+                options={this.props.fullMenuOptions}
+              />
+            </Grid.Row>
+
+            <Grid.Row>
+              <Dropdown
+                fluid
+                selection
+                name="timeSelection"
+                onChange={this.handleTimeSelectionChange}
+                placeholder="Select Time"
+                style={{background: 'white'}}
+                options={languageOptions}
+              />
+            </Grid.Row>
+
+            <Grid.Row>
+              <Dropdown
+                fluid
+                selection
+                style={{background: 'white'}}
+                placeholder="Select Duty"
+                options={this.props.dutyOptions}
+                onChange={this.handleDutySelectionChange}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Dropdown
+                placeholder="Select Commands"
+                fluid
+                selection
+                style={{background: 'white'}}
+                options={languageOptions}
+                onChange={this.handleCommandSelectionChange}
+              />
+            </Grid.Row>
+            <Grid.Row>
+              <Button fluid color="black">
+                Get Chart
+              </Button>
+            </Grid.Row>
+            <Grid.Row>
               <Button fluid color="black">
                 Save JPEG
               </Button>
@@ -124,7 +147,7 @@ const mapDispatch = (dispatch) => {
     handleClick() {
       dispatch(logout())
     },
-    putSelections: (selections) => dispatch(putSelection(selections)),
+    putSelection: (selections) => dispatch(putSelection(selections)),
   }
 }
 
