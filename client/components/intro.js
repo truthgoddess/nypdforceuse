@@ -5,31 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Grid, Dropdown, Button, Form, Select} from 'semantic-ui-react'
 import {VictoryBar} from 'victory'
-import {putSelection} from '../store/graphOption'
-
-const languageOptions = [
-  {key: 'Arabic', text: 'Arabic', value: 'Arabic'},
-  {key: 'Chinese', text: 'Chinese', value: 'Chinese'},
-  {key: 'Danish', text: 'Danish', value: 'Danish'},
-  {key: 'Dutch', text: 'Dutch', value: 'Dutch'},
-  {key: 'English', text: 'English', value: 'English'},
-  {key: 'French', text: 'French', value: 'French'},
-  {key: 'German', text: 'German', value: 'German'},
-  {key: 'Greek', text: 'Greek', value: 'Greek'},
-  {key: 'Hungarian', text: 'Hungarian', value: 'Hungarian'},
-  {key: 'Italian', text: 'Italian', value: 'Italian'},
-  {key: 'Japanese', text: 'Japanese', value: 'Japanese'},
-  {key: 'Korean', text: 'Korean', value: 'Korean'},
-  {key: 'Lithuanian', text: 'Lithuanian', value: 'Lithuanian'},
-  {key: 'Persian', text: 'Persian', value: 'Persian'},
-  {key: 'Polish', text: 'Polish', value: 'Polish'},
-  {key: 'Portuguese', text: 'Portuguese', value: 'Portuguese'},
-  {key: 'Russian', text: 'Russian', value: 'Russian'},
-  {key: 'Spanish', text: 'Spanish', value: 'Spanish'},
-  {key: 'Swedish', text: 'Swedish', value: 'Swedish'},
-  {key: 'Turkish', text: 'Turkish', value: 'Turkish'},
-  {key: 'Vietnamese', text: 'Vietnamese', value: 'Vietnamese'},
-]
+import {getTimes, getCommands} from '../store/graphOption'
 
 class Intro extends React.Component {
   constructor() {
@@ -48,29 +24,20 @@ class Intro extends React.Component {
     )
   }
 
+  async componentDidMount() {
+    await this.props.getCommands()
+    await this.props.getTimes()
+  }
+
   handleDropdownChange = async (e, {name, value}) => {
     await this.setState({
       [name]: value,
     })
-    console.log(this.state)
   }
 
-  handleDutySelectionChange = async (e, {value}) => {
-    await this.setState({
-      fullMenuSelection: value,
-    })
-  }
-
-  handleTimeSelectionChange = async (e, {value}) => {
-    await this.setState({
-      fullMenuSelection: value,
-    })
-  }
-
-  handleCommandSelectionChange = async (e, {value}) => {
-    await this.setState({
-      fullMenuSelection: value,
-    })
+  handleSubmit = async (e, {value}) => {
+    e.preventDefault()
+    await console.log(this.state)
   }
 
   render() {
@@ -92,18 +59,21 @@ class Intro extends React.Component {
                 options={this.props.fullMenuOptions}
               />
             </Grid.Row>
-
-            <Grid.Row>
-              <Dropdown
-                fluid
-                selection
-                name="timeSelection"
-                onChange={this.handleDropdownChange}
-                placeholder="Select Time"
-                style={{background: 'white'}}
-                options={languageOptions}
-              />
-            </Grid.Row>
+            {this.props.timeOptions ? (
+              <Grid.Row>
+                <Dropdown
+                  fluid
+                  selection
+                  name="timeSelection"
+                  onChange={this.handleDropdownChange}
+                  placeholder="Select Time"
+                  style={{background: 'white'}}
+                  options={this.props.timeOptions}
+                />
+              </Grid.Row>
+            ) : (
+              ''
+            )}
 
             <Grid.Row>
               <Dropdown
@@ -116,19 +86,26 @@ class Intro extends React.Component {
                 onChange={this.handleDropdownChange}
               />
             </Grid.Row>
+
+            {this.props.commandOptions ? (
+              <Grid.Row>
+                <Dropdown
+                  placeholder="Select Commands"
+                  name="commandSelection"
+                  fluid
+                  search
+                  selection
+                  style={{background: 'white'}}
+                  options={this.props.commandOptions}
+                  onChange={this.handleDropdownChange}
+                />
+              </Grid.Row>
+            ) : (
+              ''
+            )}
+
             <Grid.Row>
-              <Dropdown
-                placeholder="Select Commands"
-                name="commandSelection"
-                fluid
-                selection
-                style={{background: 'white'}}
-                options={languageOptions}
-                onChange={this.handleDropdownChange}
-              />
-            </Grid.Row>
-            <Grid.Row>
-              <Button fluid color="black">
+              <Button onClick={this.handleSubmit} fluid color="black">
                 Get Chart
               </Button>
             </Grid.Row>
@@ -156,8 +133,9 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
     fullMenuOptions: state.graphOption.fullMenuOptions,
-    injuryOptions: state.graphOption.injuryOptions,
     dutyOptions: state.graphOption.dutyOptions,
+    timeOptions: state.graphOption.timeOptions,
+    commandOptions: state.graphOption.commandOptions,
   }
 }
 
@@ -166,7 +144,8 @@ const mapDispatch = (dispatch) => {
     handleClick() {
       dispatch(logout())
     },
-    putSelection: (selections) => dispatch(putSelection(selections)),
+    getTimes: () => dispatch(getTimes()),
+    getCommands: () => dispatch(getCommands()),
   }
 }
 
