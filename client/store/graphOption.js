@@ -86,8 +86,6 @@ export const getCommands = () => async (dispatch) => {
  */
 export default function (state = defaultGraphOption, action) {
   switch (action.type) {
-    case SET_GRAPH_DATA:
-      return {...state}
     case SET_COMMAND_OPTIONS:
       return {...state, commandOptions: action.commands}
     case SET_TIME_OPTIONS:

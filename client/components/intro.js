@@ -6,6 +6,7 @@ import {logout} from '../store'
 import {Grid, Dropdown, Button, Form, Select} from 'semantic-ui-react'
 import {VictoryBar} from 'victory'
 import {getTimes, getCommands} from '../store/graphOption'
+import {getData} from '../store/currentView'
 
 class Intro extends React.Component {
   constructor() {
@@ -17,11 +18,7 @@ class Intro extends React.Component {
       commandSelection: 'Select Command',
     }
     this.handleDropdownChange = this.handleDropdownChange.bind(this)
-    this.handleDutySelectionChange = this.handleDutySelectionChange.bind(this)
-    this.handleTimeSelectionChange = this.handleTimeSelectionChange.bind(this)
-    this.handleCommandSelectionChange = this.handleCommandSelectionChange.bind(
-      this
-    )
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   async componentDidMount() {
@@ -36,8 +33,10 @@ class Intro extends React.Component {
   }
 
   handleSubmit = async (e, {value}) => {
-    e.preventDefault()
-    await console.log(this.state)
+    let path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
+    console.log('hello', path)
+    console.log(typeof path)
+    this.props.getData(path)
   }
 
   render() {
@@ -146,6 +145,7 @@ const mapDispatch = (dispatch) => {
     },
     getTimes: () => dispatch(getTimes()),
     getCommands: () => dispatch(getCommands()),
+    getData: (path) => dispatch(getData(path)),
   }
 }
 
