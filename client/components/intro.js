@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Grid, Segment, GridRow, Dropdown, Button} from 'semantic-ui-react'
+import {Grid, Dropdown, Input, Button, Form, Select} from 'semantic-ui-react'
 import {VictoryBar} from 'victory'
+import {putSelection} from '../store/graphOption'
 
 const languageOptions = [
   {key: 'Arabic', text: 'Arabic', value: 'Arabic'},
@@ -34,21 +35,41 @@ class Intro extends React.Component {
   constructor() {
     super()
     this.state = {
-      fullMenuSelection: 'Select Main Graph',
+      fullMenuSelection: 'Select Graph Type',
       injurySelection: 'Select Injuries',
       dutySelection: 'Select Duty',
       test: 0,
     }
-    this.handleFullMenuChange = this.handleFullMenuChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleFullMenuChange = (e, data) => {
-    console.log(e)
-    this.setState({fullMenuSelection: data.value})
-    console.log(this.state.test)
+  handleSubmit = (e, data) => {
+    e.preventDefault()
+    console.log('helleoeooeoeoeo')
+    console.log(e.target.fullMenuOptions.value, 'what?')
   }
 
-  handleInjurySelectionChange = (e) => {}
+  handleChange = (e, data) => {
+    console.log(e.target(), 'event')
+    // let text = data.options.forEach((item) => {
+    //   if (item.key === data.value) return item.text
+    // })
+    // this.setState({
+    //   fullMenuSelection: text,
+    // })
+    //console.log(this.state)
+  }
+
+  handleInjurySelectionChange = (e, data) => {
+    console.log(data.value)
+    let text = data.options.forEach((item) => {
+      if (item.key === data.value) return item.text
+    })
+    this.setState({
+      injurySelection: text,
+    })
+  }
 
   handleDutySelectionChange = (e) => {}
 
@@ -61,52 +82,23 @@ class Intro extends React.Component {
           </Grid.Column>
           <Grid.Column width={4}>
             <Grid.Row>
-              <Dropdown
-                onChange={this.handleFullMenuChange}
-                style={{background: 'white'}}
-                button
-                floating
-                labeled
-                options={this.props.fullMenuOptions}
-                text={this.state.fullMenuSelection}
-              />
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Field
+                  control={Select}
+                  label="Gender"
+                  options={this.props.fullMenuOptions}
+                  placeholder="Select Graph"
+                />
+                <Form.Field control={Button}>Submit</Form.Field>
+              </Form>
+              <Button fluid color="black">
+                Save JPEG
+              </Button>
             </Grid.Row>
             <Grid.Row>
-              <Dropdown
-                style={{background: 'white'}}
-                button
-                floating
-                labeled
-                options={this.props.injuryOptions}
-                text={this.state.injurySelection}
-              />
-            </Grid.Row>
-            <Grid.Row>
-              <Dropdown
-                style={{background: 'white'}}
-                button
-                floating
-                labeled
-                options={this.props.dutyOptions}
-                text={this.state.dutySelection}
-              />
-            </Grid.Row>
-            <Grid.Row>
-              <Dropdown
-                style={{background: 'white'}}
-                button
-                floating
-                labeled
-                options={languageOptions}
-                search
-                text="command from state"
-              />
-            </Grid.Row>
-            <Grid.Row>
-              <Button color="black">Save JPEG</Button>
-            </Grid.Row>
-            <Grid.Row>
-              <Button color="black">Copy Data</Button>
+              <Button fluid color="black">
+                Copy Data
+              </Button>
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
@@ -132,6 +124,7 @@ const mapDispatch = (dispatch) => {
     handleClick() {
       dispatch(logout())
     },
+    putSelections: (selections) => dispatch(putSelection(selections)),
   }
 }
 
