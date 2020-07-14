@@ -33,16 +33,12 @@ const defaultGraphOption = {
     {key: 'officerInjury', text: 'Officer Injuries', value: 'officerInjury'},
   ],
   dutyOptions: [
-    {key: 'offDuty', text: 'Off Duty', value: 'offDuty'},
+    {key: 'allDuty', text: 'All Duty', value: 'allDuty'},
     {key: 'onDuty', text: 'On Duty', value: 'onDuty'},
+    {key: 'offDuty', text: 'Off Duty', value: 'offDuty'},
   ],
   commandOptions: [],
-  currentSelection: {
-    fullMenuOption: '',
-    yearOption: '',
-    injuryOption: '',
-    dutyOption: '',
-  }, //need to get from DB
+  //need to get from DB
 }
 
 /**

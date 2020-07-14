@@ -40,21 +40,38 @@ class Intro extends React.Component {
       dutySelection: 'Select Duty',
       commandSelection: 'Select Command',
     }
-    this.handleFullMenuChange = this.handleFullMenuChange.bind(this)
+    this.handleDropdownChange = this.handleDropdownChange.bind(this)
+    this.handleDutySelectionChange = this.handleDutySelectionChange.bind(this)
+    this.handleTimeSelectionChange = this.handleTimeSelectionChange.bind(this)
+    this.handleCommandSelectionChange = this.handleCommandSelectionChange.bind(
+      this
+    )
   }
 
-  handleFullMenuChange = async (e, data) => {
+  handleDropdownChange = async (e, {name, value}) => {
     await this.setState({
-      fullMenuSelection: data.value,
+      [name]: value,
     })
     console.log(this.state)
   }
 
-  handleDutySelectionChange = (e) => {}
+  handleDutySelectionChange = async (e, {value}) => {
+    await this.setState({
+      fullMenuSelection: value,
+    })
+  }
 
-  handleTimeSelectionChange = (e) => {}
+  handleTimeSelectionChange = async (e, {value}) => {
+    await this.setState({
+      fullMenuSelection: value,
+    })
+  }
 
-  handleCommandSelectionChange = (e) => {}
+  handleCommandSelectionChange = async (e, {value}) => {
+    await this.setState({
+      fullMenuSelection: value,
+    })
+  }
 
   render() {
     return (
@@ -70,7 +87,7 @@ class Intro extends React.Component {
                 name="fullMenuSelection"
                 selection
                 placeholder="Select Chart"
-                onChange={this.handleFullMenuChange}
+                onChange={this.handleDropdownChange}
                 style={{background: 'white'}}
                 options={this.props.fullMenuOptions}
               />
@@ -81,7 +98,7 @@ class Intro extends React.Component {
                 fluid
                 selection
                 name="timeSelection"
-                onChange={this.handleTimeSelectionChange}
+                onChange={this.handleDropdownChange}
                 placeholder="Select Time"
                 style={{background: 'white'}}
                 options={languageOptions}
@@ -91,21 +108,23 @@ class Intro extends React.Component {
             <Grid.Row>
               <Dropdown
                 fluid
+                name="dutySelection"
                 selection
                 style={{background: 'white'}}
                 placeholder="Select Duty"
                 options={this.props.dutyOptions}
-                onChange={this.handleDutySelectionChange}
+                onChange={this.handleDropdownChange}
               />
             </Grid.Row>
             <Grid.Row>
               <Dropdown
                 placeholder="Select Commands"
+                name="commandSelection"
                 fluid
                 selection
                 style={{background: 'white'}}
                 options={languageOptions}
-                onChange={this.handleCommandSelectionChange}
+                onChange={this.handleDropdownChange}
               />
             </Grid.Row>
             <Grid.Row>
