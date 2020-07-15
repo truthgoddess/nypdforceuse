@@ -8,10 +8,9 @@ const SET_GRAPH_DATA = 'SET_GRAPH_DATA'
 /**
  * INITIAL STATE
  */
-const defaultCurrentView = {
-  graphType: '',
-  data: [],
-}
+// const defaultCurrentView = {
+//   data: [],
+// }
 
 /**
  * ACTION CREATORS
@@ -35,7 +34,7 @@ export const getData = (path) => async (dispatch) => {
 /**
  * REDUCER
  */
-export default function (state = defaultCurrentView, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case SET_GRAPH_DATA:
       return action.data

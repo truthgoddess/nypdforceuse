@@ -23,7 +23,7 @@ module.exports = router
 router.get('/allYear/allQuarter', async function (req, res, next) {
   try {
     let incidentBasisEncounterData = await IncidentsBasisEncounter.findAll({
-      attributes: ['count'],
+      attributes: ['count', 'id'],
       include: [
         {model: EncounterCategory, attributes: ['type']},
         {model: TimeFrame, attributes: ['year', 'quarter']},
@@ -53,7 +53,7 @@ router.get('/allYear/:quarter', async function (req, res, next) {
         ...incidentBasisEncounterData,
         ...(await IncidentsBasisEncounter.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['count'],
+          attributes: ['count', 'id'],
           include: [
             {model: EncounterCategory, attributes: ['type']},
             {model: TimeFrame, attributes: ['year', 'quarter']},
@@ -83,7 +83,7 @@ router.get('/:year/allQuarter/', async function (req, res, next) {
         ...incidentBasisEncounterData,
         ...(await IncidentsBasisEncounter.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['count'],
+          attributes: ['count', 'id'],
           include: [
             {model: EncounterCategory, attributes: ['type']},
             {model: TimeFrame, attributes: ['year', 'quarter']},
@@ -113,7 +113,7 @@ router.get('/:year/:quarter', async function (req, res, next) {
         ...incidentBasisEncounterData,
         ...(await IncidentsBasisEncounter.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['count'],
+          attributes: ['count', 'id'],
           include: [
             {model: EncounterCategory, attributes: ['type']},
             {model: TimeFrame, attributes: ['year', 'quarter']},
