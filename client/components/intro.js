@@ -73,20 +73,24 @@ class Intro extends React.Component {
             ) : (
               ''
             )}
+            {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+              <Grid.Row>
+                <Dropdown
+                  fluid
+                  name="dutySelection"
+                  selection
+                  style={{background: 'white'}}
+                  placeholder="Select Duty"
+                  options={this.props.dutyOptions}
+                  onChange={this.handleDropdownChange}
+                />
+              </Grid.Row>
+            ) : (
+              ''
+            )}
 
-            <Grid.Row>
-              <Dropdown
-                fluid
-                name="dutySelection"
-                selection
-                style={{background: 'white'}}
-                placeholder="Select Duty"
-                options={this.props.dutyOptions}
-                onChange={this.handleDropdownChange}
-              />
-            </Grid.Row>
-
-            {this.props.commandOptions ? (
+            {this.props.commandOptions &&
+            this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
               <Grid.Row>
                 <Dropdown
                   placeholder="Select Commands"
