@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import store from '../store'
 import {Grid, Dropdown, Button, Form, Select} from 'semantic-ui-react'
 import {VictoryBar} from 'victory'
 import {getTimes, getCommands} from '../store/graphOption'
 import {getData} from '../store/currentView'
+import {copyToClipboard} from '../utility'
 
 class Intro extends React.Component {
   constructor() {
@@ -19,28 +20,33 @@ class Intro extends React.Component {
     }
     this.handleDropdownChange = this.handleDropdownChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCopyData = this.handleCopyData.bind(this)
   }
 
-  async componentDidMount() {
-    await this.props.getCommands()
-    await this.props.getTimes()
+  componentDidMount() {
+    this.props.getCommands()
+    this.props.getTimes()
   }
 
-  handleDropdownChange = async (e, {name, value}) => {
-    await this.setState({
+  handleDropdownChange = (e, {name, value}) => {
+    this.setState({
       [name]: value,
     })
   }
 
-  handleSubmit = async (e, {value}) => {
+  handleCopyData = (e) => {
+    console.log('handleCopyData')
+    copyToClipboard(JSON.stringify(store.getState().currentView))
+  }
+
+  handleSubmit = (e, {value}) => {
     let path
     if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
     } else {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}`
     }
-    console.log('hello', path)
-    console.log(typeof path)
+
     this.props.getData(path)
   }
 
@@ -118,14 +124,16 @@ class Intro extends React.Component {
               </Button>
             </Grid.Row>
             <Grid.Row>
-              <Button fluid color="black">
-                Save JPEG
-              </Button>
+              <Button label="Save JPEG" fluid color="black" icon="picture" />
             </Grid.Row>
             <Grid.Row>
-              <Button fluid color="black">
-                Copy Data
-              </Button>
+              <Button
+                label="Copy Data"
+                onClick={this.handleCopyData}
+                fluid
+                color="black"
+                icon="copy"
+              />
             </Grid.Row>
           </Grid.Column>
         </Grid.Row>
