@@ -1,3 +1,3 @@
 let {helloClient} = require('./helloClient')
-
-module.exports = {helloClient}
+let {copyToClipboard} = require('./copyToClipboard')
+module.exports = {helloClient, copyToClipboard}
