@@ -33,7 +33,12 @@ class Intro extends React.Component {
   }
 
   handleSubmit = async (e, {value}) => {
-    let path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
+    let path
+    if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {
+      path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
+    } else {
+      path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}`
+    }
     console.log('hello', path)
     console.log(typeof path)
     this.props.getData(path)
@@ -73,20 +78,24 @@ class Intro extends React.Component {
             ) : (
               ''
             )}
+            {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+              <Grid.Row>
+                <Dropdown
+                  fluid
+                  name="dutySelection"
+                  selection
+                  style={{background: 'white'}}
+                  placeholder="Select Duty"
+                  options={this.props.dutyOptions}
+                  onChange={this.handleDropdownChange}
+                />
+              </Grid.Row>
+            ) : (
+              ''
+            )}
 
-            <Grid.Row>
-              <Dropdown
-                fluid
-                name="dutySelection"
-                selection
-                style={{background: 'white'}}
-                placeholder="Select Duty"
-                options={this.props.dutyOptions}
-                onChange={this.handleDropdownChange}
-              />
-            </Grid.Row>
-
-            {this.props.commandOptions ? (
+            {this.props.commandOptions &&
+            this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
               <Grid.Row>
                 <Dropdown
                   placeholder="Select Commands"
