@@ -59,6 +59,20 @@ class Intro extends React.Component {
   }
 
   render() {
+    const yellow200 = '#FFF59D'
+    const deepOrange600 = '#F4511E'
+    const lime300 = '#DCE775'
+    const lightGreen500 = '#8BC34A'
+    const teal700 = '#00796B'
+    const cyan900 = '#006064'
+    const colors = [
+      deepOrange600,
+      yellow200,
+      lime300,
+      lightGreen500,
+      teal700,
+      cyan900,
+    ]
     if (
       this.props.currentView.officerData &&
       this.props.currentView.subjectData
@@ -85,7 +99,7 @@ class Intro extends React.Component {
                     dependentAxis
                     style={{tickLabels: {fontSize: 10}}}
                   />
-                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                  <VictoryStack colorScale={colors}>
                     {this.props.currentView.officerData.map((item) => (
                       <VictoryBar
                         key={item.id}
@@ -232,7 +246,7 @@ class Intro extends React.Component {
                     dependentAxis
                     style={{tickLabels: {fontSize: 10}}}
                   />
-                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                  <VictoryStack colorScale={colors}>
                     {this.props.currentView.subjectData.map((item) => (
                       <VictoryBar
                         key={item.id}
@@ -362,7 +376,7 @@ class Intro extends React.Component {
                     dependentAxis
                     style={{tickLabels: {fontSize: 10}}}
                   />
-                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                  <VictoryStack colorScale={colors}>
                     {this.props.currentView.officerData.map((item) => (
                       <VictoryBar
                         key={item.id}
