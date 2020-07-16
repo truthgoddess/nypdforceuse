@@ -16,7 +16,6 @@ import {
 import {getTimes, getCommands} from '../store/graphOption'
 import {getData} from '../store/currentView'
 import {copyToClipboard} from '../utility'
-import {data} from '../utility'
 
 class Intro extends React.Component {
   constructor() {
