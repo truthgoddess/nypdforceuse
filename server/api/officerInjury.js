@@ -39,7 +39,7 @@ router.get('/allYear/allQuarter/allDuty/allCommand', async function (
 ) {
   try {
     let officerInjuriesData = await OfficerInjury.findAll({
-      attributes: ['onDuty', 'offDuty'],
+      attributes: ['onDuty', 'offDuty', 'id'],
       include: [
         {model: Command, attributes: ['commandName']},
         {model: InjuryType, attributes: ['type']},
@@ -70,7 +70,7 @@ router.get('/allYear/AllQuarter/allDuty/:command', async function (
     })
     let officerInjuriesData = await OfficerInjury.findAll({
       where: {commandId: command.id},
-      attributes: ['onDuty', 'offDuty'],
+      attributes: ['onDuty', 'offDuty', 'id'],
       include: [
         {model: Command, attributes: ['commandName']},
         {model: InjuryType, attributes: ['type']},
@@ -100,7 +100,7 @@ router.get('/allYear/allQuarter/:duty/allCommand', async function (
     if (req.params.duty === 'on') duty = 'onDuty'
     if (req.params.duty === 'off') duty = 'offDuty'
     let officerInjuriesData = await OfficerInjury.findAll({
-      attributes: [duty],
+      attributes: [duty, 'id'],
       include: [
         {model: Command, attributes: ['commandName']},
         {model: InjuryType, attributes: ['type']},
@@ -134,7 +134,7 @@ router.get('/allYear/allQuarter/:duty/:command', async function (
     if (req.params.duty === 'off') duty = 'offDuty'
     let officerInjuriesData = await OfficerInjury.findAll({
       where: {commandId: command.id},
-      attributes: [duty],
+      attributes: [duty, 'id'],
       include: [
         {model: Command, attributes: ['commandName']},
         {model: InjuryType, attributes: ['type']},
@@ -170,7 +170,7 @@ router.get('/allYear/:quarter/allDuty/allCommand/', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -212,7 +212,7 @@ router.get('/allYear/:quarter/allDuty/:command', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -254,7 +254,7 @@ router.get('/allYear/:quarter/:duty/allCommand', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -295,7 +295,7 @@ router.get('/allYear/:quarter/:duty/:command', async function (req, res, next) {
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -331,7 +331,7 @@ router.get('/:year/allQuarter/allDuty/allCommand', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -373,7 +373,7 @@ router.get('/:year/allQuarter/allDuty/:command', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -413,7 +413,7 @@ router.get('/:year/allQuarter/:duty/allCommand', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -451,7 +451,7 @@ router.get('/:year/allQuarter/:duty/:command', async function (req, res, next) {
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -488,7 +488,7 @@ router.get('/:year/:quarter/allDuty/allCommand', async function (
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -524,7 +524,7 @@ router.get('/:year/:quarter/allDuty/:command', async function (req, res, next) {
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: ['onDuty', 'offDuty'],
+          attributes: ['onDuty', 'offDuty', 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -560,7 +560,7 @@ router.get('/:year/:quarter/:duty/allCommand', async function (req, res, next) {
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i]},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
@@ -599,7 +599,7 @@ router.get('/:year/:quarter/:duty/:command', async function (req, res, next) {
         ...officerInjuriesData,
         ...(await OfficerInjury.findAll({
           where: {timeFrameId: timeFrameIds[i], commandId: command.id},
-          attributes: [duty],
+          attributes: [duty, 'id'],
           include: [
             {model: Command, attributes: ['commandName']},
             {model: InjuryType, attributes: ['type']},
