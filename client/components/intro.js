@@ -19,6 +19,8 @@ import LeftNavAllInjuries from './leftNavAllInjuries'
 import LeftNavSubjectInjuries from './leftNavSubjectInjuries'
 import LeftNavOfficerInjuries from './leftNavOfficerInjuries'
 import Welcome from './welcome'
+import LeftNavForceType from './leftNavForceType'
+import LeftNavIncidentsBasisEncounter from './leftNavIncidentsBasisEncounter'
 
 class Intro extends React.Component {
   render() {
@@ -97,6 +99,34 @@ class Intro extends React.Component {
           </Grid>
         )
       }
+    } else if (this.props.currentView.forceTypeData) {
+      return (
+        <Grid
+          celled
+          padded
+          columns={2}
+          style={{height: '100vh', margin: '10px'}}
+        >
+          <Grid.Row textAlign="center">
+            <LeftNavForceType />
+            <RightNavBar />
+          </Grid.Row>
+        </Grid>
+      )
+    } else if (this.props.currentView.incidentBasisEncounterData) {
+      return (
+        <Grid
+          celled
+          padded
+          columns={2}
+          style={{height: '100vh', margin: '10px'}}
+        >
+          <Grid.Row textAlign="center">
+            <LeftNavIncidentsBasisEncounter />
+            <RightNavBar />
+          </Grid.Row>
+        </Grid>
+      )
     } else {
       return (
         <Grid

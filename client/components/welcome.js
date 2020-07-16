@@ -18,7 +18,7 @@ class Welcome extends React.Component {
   render() {
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <Container verticalAlign="middle" text>
+        <Container text>
           <Header as="h2">NYPD Force Use Data Display and Provider</Header>
 
           <p>
