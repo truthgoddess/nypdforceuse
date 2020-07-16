@@ -54,145 +54,604 @@ class Intro extends React.Component {
     } else {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}`
     }
-
+    console.log(path)
     this.props.getData(path)
   }
 
   render() {
-    return (
-      <Grid celled padded columns={2} style={{height: '100vh', margin: '10px'}}>
-        <Grid.Row textAlign="center">
-          <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-            {this.props.currentView.officerData ||
-            this.props.currentView.subjectData ? (
-              <VictoryChart domainPadding={20}>
-                <VictoryAxis
-                  independentAxis
-                  style={{tickLabels: {fontSize: 10}}}
-                />
-                <VictoryAxis
-                  dependentAxis
-                  style={{tickLabels: {fontSize: 10}}}
-                />
-                <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
-                  {this.props.currentView.officerData.length > 0
-                    ? this.props.currentView.officerData.map((item) => (
-                        <VictoryBar
-                          key={item.id}
-                          data={[
-                            {
-                              x: item.injuryType.type,
-                              y: item.onDuty + item.offDuty,
-                            },
-                          ]}
-                          labels={() => `${item.command.commandName}`}
-                          labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                        />
-                      ))
-                    : ''}
-                  {this.props.currentView.subjectData.length > 0
-                    ? this.props.currentView.subjectData.map((item) => (
-                        <VictoryBar
-                          key={item.id}
-                          data={[
-                            {
-                              x: item.injuryType.type,
-                              y: item.onDuty + item.offDuty,
-                            },
-                          ]}
-                          labels={() => `${item.command.commandName}`}
-                          labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                        />
-                      ))
-                    : ''}
-                </VictoryStack>
-              </VictoryChart>
-            ) : (
-              ''
-            )}
-          </Grid.Column>
-          <Grid.Column width={4}>
-            <Grid.Row>
-              <Dropdown
-                fluid
-                name="fullMenuSelection"
-                selection
-                placeholder="Select Chart"
-                onChange={this.handleDropdownChange}
-                style={{background: 'white'}}
-                options={this.props.fullMenuOptions}
-              />
-            </Grid.Row>
-            {this.props.timeOptions ? (
-              <Grid.Row>
-                <Dropdown
-                  fluid
-                  selection
-                  name="timeSelection"
-                  onChange={this.handleDropdownChange}
-                  placeholder="Select Time"
-                  style={{background: 'white'}}
-                  options={this.props.timeOptions}
-                />
-              </Grid.Row>
-            ) : (
-              ''
-            )}
-            {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-              <Grid.Row>
-                <Dropdown
-                  fluid
-                  name="dutySelection"
-                  selection
-                  style={{background: 'white'}}
-                  placeholder="Select Duty"
-                  options={this.props.dutyOptions}
-                  onChange={this.handleDropdownChange}
-                />
-              </Grid.Row>
-            ) : (
-              ''
-            )}
+    if (
+      this.props.currentView.officerData &&
+      this.props.currentView.subjectData
+    ) {
+      if (
+        this.props.currentView.officerData.length > 0 &&
+        this.props.currentView.subjectData.length > 0
+      ) {
+        return (
+          <Grid
+            celled
+            padded
+            columns={2}
+            style={{height: '100vh', margin: '10px'}}
+          >
+            <Grid.Row textAlign="center">
+              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+                <VictoryChart domainPadding={20}>
+                  <VictoryAxis
+                    independentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                    {this.props.currentView.officerData.map((item) => (
+                      <VictoryBar
+                        key={item.id}
+                        data={[
+                          {
+                            x: item.injuryType.type,
+                            y: item.onDuty + item.offDuty,
+                          },
+                        ]}
+                        labels={() => `${item.command.commandName}`}
+                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                      />
+                    ))}
+                    {this.props.currentView.subjectData.map((item) => (
+                      <VictoryBar
+                        key={item.id}
+                        data={[
+                          {
+                            x: item.injuryType.type,
+                            y: item.onDuty + item.offDuty,
+                          },
+                        ]}
+                        labels={() => `${item.command.commandName}`}
+                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                      />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    name="fullMenuSelection"
+                    selection
+                    placeholder="Select Chart"
+                    onChange={this.handleDropdownChange}
+                    style={{background: 'white'}}
+                    options={this.props.fullMenuOptions}
+                  />
+                </Grid.Row>
+                {this.props.timeOptions ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      selection
+                      name="timeSelection"
+                      onChange={this.handleDropdownChange}
+                      placeholder="Select Time"
+                      style={{background: 'white'}}
+                      options={this.props.timeOptions}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      name="dutySelection"
+                      selection
+                      style={{background: 'white'}}
+                      placeholder="Select Duty"
+                      options={this.props.dutyOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
 
-            {this.props.commandOptions &&
-            this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                {this.props.commandOptions &&
+                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      placeholder="Select Commands"
+                      name="commandSelection"
+                      fluid
+                      search
+                      selection
+                      style={{background: 'white'}}
+                      options={this.props.commandOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                <Grid.Row>
+                  <Button onClick={this.handleSubmit} fluid color="black">
+                    Get Chart
+                  </Button>
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Save JPEG"
+                    fluid
+                    color="black"
+                    icon="picture"
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Copy Data"
+                    onClick={this.handleCopyData}
+                    fluid
+                    color="black"
+                    icon="copy"
+                  />
+                </Grid.Row>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )
+      } else if (
+        this.props.currentView.officerData.length === 0 &&
+        this.props.currentView.subjectData.length > 0
+      ) {
+        return (
+          <Grid
+            celled
+            padded
+            columns={2}
+            style={{height: '100vh', margin: '10px'}}
+          >
+            <Grid.Row textAlign="center">
+              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+                <VictoryChart domainPadding={20}>
+                  <VictoryAxis
+                    independentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                    {this.props.currentView.subjectData.map((item) => (
+                      <VictoryBar
+                        key={item.id}
+                        data={[
+                          {
+                            x: item.injuryType.type,
+                            y: item.onDuty + item.offDuty,
+                          },
+                        ]}
+                        labels={() => `${item.command.commandName}`}
+                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                      />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    name="fullMenuSelection"
+                    selection
+                    placeholder="Select Chart"
+                    onChange={this.handleDropdownChange}
+                    style={{background: 'white'}}
+                    options={this.props.fullMenuOptions}
+                  />
+                </Grid.Row>
+                {this.props.timeOptions ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      selection
+                      name="timeSelection"
+                      onChange={this.handleDropdownChange}
+                      placeholder="Select Time"
+                      style={{background: 'white'}}
+                      options={this.props.timeOptions}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      name="dutySelection"
+                      selection
+                      style={{background: 'white'}}
+                      placeholder="Select Duty"
+                      options={this.props.dutyOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                {this.props.commandOptions &&
+                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      placeholder="Select Commands"
+                      name="commandSelection"
+                      fluid
+                      search
+                      selection
+                      style={{background: 'white'}}
+                      options={this.props.commandOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                <Grid.Row>
+                  <Button onClick={this.handleSubmit} fluid color="black">
+                    Get Chart
+                  </Button>
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Save JPEG"
+                    fluid
+                    color="black"
+                    icon="picture"
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Copy Data"
+                    onClick={this.handleCopyData}
+                    fluid
+                    color="black"
+                    icon="copy"
+                  />
+                </Grid.Row>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )
+      } else if (
+        this.props.currentView.officerData.length > 0 &&
+        this.props.currentView.subjectData.length === 0
+      ) {
+        return (
+          <Grid
+            celled
+            padded
+            columns={2}
+            style={{height: '100vh', margin: '10px'}}
+          >
+            <Grid.Row textAlign="center">
+              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+                <VictoryChart domainPadding={20}>
+                  <VictoryAxis
+                    independentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    style={{tickLabels: {fontSize: 10}}}
+                  />
+                  <VictoryStack colorScale={['grey', 'black', 'darkblue']}>
+                    {this.props.currentView.officerData.map((item) => (
+                      <VictoryBar
+                        key={item.id}
+                        data={[
+                          {
+                            x: item.injuryType.type,
+                            y: item.onDuty + item.offDuty,
+                          },
+                        ]}
+                        labels={() => `${item.command.commandName}`}
+                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                      />
+                    ))}
+                  </VictoryStack>
+                </VictoryChart>
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    name="fullMenuSelection"
+                    selection
+                    placeholder="Select Chart"
+                    onChange={this.handleDropdownChange}
+                    style={{background: 'white'}}
+                    options={this.props.fullMenuOptions}
+                  />
+                </Grid.Row>
+                {this.props.timeOptions ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      selection
+                      name="timeSelection"
+                      onChange={this.handleDropdownChange}
+                      placeholder="Select Time"
+                      style={{background: 'white'}}
+                      options={this.props.timeOptions}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      name="dutySelection"
+                      selection
+                      style={{background: 'white'}}
+                      placeholder="Select Duty"
+                      options={this.props.dutyOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                {this.props.commandOptions &&
+                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      placeholder="Select Commands"
+                      name="commandSelection"
+                      fluid
+                      search
+                      selection
+                      style={{background: 'white'}}
+                      options={this.props.commandOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                <Grid.Row>
+                  <Button onClick={this.handleSubmit} fluid color="black">
+                    Get Chart
+                  </Button>
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Save JPEG"
+                    fluid
+                    color="black"
+                    icon="picture"
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Copy Data"
+                    onClick={this.handleCopyData}
+                    fluid
+                    color="black"
+                    icon="copy"
+                  />
+                </Grid.Row>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )
+      } else if (
+        this.props.currentView.officerData.length === 0 &&
+        this.props.currentView.subjectData.length === 0
+      ) {
+        return (
+          <Grid
+            celled
+            padded
+            columns={2}
+            style={{height: '100vh', margin: '10px'}}
+          >
+            <Grid.Row textAlign="center">
+              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+                No injuries/force use found!
+              </Grid.Column>
+              <Grid.Column width={4}>
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    name="fullMenuSelection"
+                    selection
+                    placeholder="Select Chart"
+                    onChange={this.handleDropdownChange}
+                    style={{background: 'white'}}
+                    options={this.props.fullMenuOptions}
+                  />
+                </Grid.Row>
+                {this.props.timeOptions ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      selection
+                      name="timeSelection"
+                      onChange={this.handleDropdownChange}
+                      placeholder="Select Time"
+                      style={{background: 'white'}}
+                      options={this.props.timeOptions}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      fluid
+                      name="dutySelection"
+                      selection
+                      style={{background: 'white'}}
+                      placeholder="Select Duty"
+                      options={this.props.dutyOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                {this.props.commandOptions &&
+                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                  <Grid.Row>
+                    <Dropdown
+                      placeholder="Select Commands"
+                      name="commandSelection"
+                      fluid
+                      search
+                      selection
+                      style={{background: 'white'}}
+                      options={this.props.commandOptions}
+                      onChange={this.handleDropdownChange}
+                    />
+                  </Grid.Row>
+                ) : (
+                  ''
+                )}
+
+                <Grid.Row>
+                  <Button onClick={this.handleSubmit} fluid color="black">
+                    Get Chart
+                  </Button>
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Save JPEG"
+                    fluid
+                    color="black"
+                    icon="picture"
+                  />
+                </Grid.Row>
+                <Grid.Row>
+                  <Button
+                    label="Copy Data"
+                    onClick={this.handleCopyData}
+                    fluid
+                    color="black"
+                    icon="copy"
+                  />
+                </Grid.Row>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        )
+      }
+    } else {
+      return (
+        <Grid
+          celled
+          padded
+          columns={2}
+          style={{height: '100vh', margin: '10px'}}
+        >
+          <Grid.Row textAlign="center">
+            <Grid.Column height="50vh" verticalAlign="middle" width={12}>
+              Please select data!
+            </Grid.Column>
+            <Grid.Column width={4}>
               <Grid.Row>
                 <Dropdown
-                  placeholder="Select Commands"
-                  name="commandSelection"
                   fluid
-                  search
+                  name="fullMenuSelection"
                   selection
-                  style={{background: 'white'}}
-                  options={this.props.commandOptions}
+                  placeholder="Select Chart"
                   onChange={this.handleDropdownChange}
+                  style={{background: 'white'}}
+                  options={this.props.fullMenuOptions}
                 />
               </Grid.Row>
-            ) : (
-              ''
-            )}
+              {this.props.timeOptions ? (
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    selection
+                    name="timeSelection"
+                    onChange={this.handleDropdownChange}
+                    placeholder="Select Time"
+                    style={{background: 'white'}}
+                    options={this.props.timeOptions}
+                  />
+                </Grid.Row>
+              ) : (
+                ''
+              )}
+              {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                <Grid.Row>
+                  <Dropdown
+                    fluid
+                    name="dutySelection"
+                    selection
+                    style={{background: 'white'}}
+                    placeholder="Select Duty"
+                    options={this.props.dutyOptions}
+                    onChange={this.handleDropdownChange}
+                  />
+                </Grid.Row>
+              ) : (
+                ''
+              )}
 
-            <Grid.Row>
-              <Button onClick={this.handleSubmit} fluid color="black">
-                Get Chart
-              </Button>
-            </Grid.Row>
-            <Grid.Row>
-              <Button label="Save JPEG" fluid color="black" icon="picture" />
-            </Grid.Row>
-            <Grid.Row>
-              <Button
-                label="Copy Data"
-                onClick={this.handleCopyData}
-                fluid
-                color="black"
-                icon="copy"
-              />
-            </Grid.Row>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
+              {this.props.commandOptions &&
+              this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
+                <Grid.Row>
+                  <Dropdown
+                    placeholder="Select Commands"
+                    name="commandSelection"
+                    fluid
+                    search
+                    selection
+                    style={{background: 'white'}}
+                    options={this.props.commandOptions}
+                    onChange={this.handleDropdownChange}
+                  />
+                </Grid.Row>
+              ) : (
+                ''
+              )}
+
+              <Grid.Row>
+                <Button onClick={this.handleSubmit} fluid color="black">
+                  Get Chart
+                </Button>
+              </Grid.Row>
+              <Grid.Row>
+                <Button label="Save JPEG" fluid color="black" icon="picture" />
+              </Grid.Row>
+              <Grid.Row>
+                <Button
+                  label="Copy Data"
+                  onClick={this.handleCopyData}
+                  fluid
+                  color="black"
+                  icon="copy"
+                />
+              </Grid.Row>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )
+    }
   }
 }
 
