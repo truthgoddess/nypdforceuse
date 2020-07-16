@@ -92,7 +92,11 @@ class Intro extends React.Component {
                         data={[
                           {
                             x: item.injuryType.type,
-                            y: item.onDuty + item.offDuty,
+                            y: item.onDuty
+                              ? item.onDuty
+                              : 0 + item.offDuty
+                              ? item.offDuty
+                              : 0,
                           },
                         ]}
                         labels={() => `${item.command.commandName}`}
@@ -105,7 +109,11 @@ class Intro extends React.Component {
                         data={[
                           {
                             x: item.injuryType.type,
-                            y: item.onDuty + item.offDuty,
+                            y: item.onDuty
+                              ? item.onDuty
+                              : 0 + item.offDuty
+                              ? item.offDuty
+                              : 0,
                           },
                         ]}
                         labels={() => `${item.command.commandName}`}
@@ -231,7 +239,11 @@ class Intro extends React.Component {
                         data={[
                           {
                             x: item.injuryType.type,
-                            y: item.onDuty + item.offDuty,
+                            y: item.onDuty
+                              ? item.onDuty
+                              : 0 + item.offDuty
+                              ? item.offDuty
+                              : 0,
                           },
                         ]}
                         labels={() => `${item.command.commandName}`}
@@ -357,7 +369,11 @@ class Intro extends React.Component {
                         data={[
                           {
                             x: item.injuryType.type,
-                            y: item.onDuty + item.offDuty,
+                            y: item.onDuty
+                              ? item.onDuty
+                              : 0 + item.offDuty
+                              ? item.offDuty
+                              : 0,
                           },
                         ]}
                         labels={() => `${item.command.commandName}`}
