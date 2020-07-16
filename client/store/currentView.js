@@ -26,7 +26,8 @@ export const getData = (path) => async (dispatch) => {
   try {
     console.log(path)
     let {data} = await axios.get(path)
-    dispatch(setGraphData(data))
+    console.log('data from getData', data)
+    await dispatch(setGraphData(data))
   } catch (error) {
     console.log(error)
   }
