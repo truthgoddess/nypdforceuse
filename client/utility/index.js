@@ -1,3 +1,4 @@
 let {helloClient} = require('./helloClient')
 let {copyToClipboard} = require('./copyToClipboard')
-module.exports = {helloClient, copyToClipboard}
+let {colors} = require('./colors')
+module.exports = {helloClient, copyToClipboard, colors}

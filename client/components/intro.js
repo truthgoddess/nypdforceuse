@@ -13,66 +13,15 @@ import {
   VictoryZoomContainer,
   VictoryAxis,
 } from 'victory'
-import {getTimes, getCommands} from '../store/graphOption'
-import {getData} from '../store/currentView'
-import {copyToClipboard} from '../utility'
+
+import RightNavBar from './rightNavBar'
+import LeftNavAllInjuries from './leftNavAllInjuries'
+import LeftNavSubjectInjuries from './leftNavSubjectInjuries'
+import LeftNavOfficerInjuries from './leftNavOfficerInjuries'
+import Welcome from './welcome'
 
 class Intro extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      fullMenuSelection: 'Select Graph Type',
-      timeSelection: 'Select Time',
-      dutySelection: 'Select Duty',
-      commandSelection: 'Select Command',
-    }
-    this.handleDropdownChange = this.handleDropdownChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleCopyData = this.handleCopyData.bind(this)
-  }
-
-  componentDidMount() {
-    this.props.getCommands()
-    this.props.getTimes()
-  }
-
-  handleDropdownChange = (e, {name, value}) => {
-    this.setState({
-      [name]: value,
-    })
-  }
-
-  handleCopyData = (e) => {
-    console.log('handleCopyData')
-    copyToClipboard(JSON.stringify(this.props.currentView))
-  }
-
-  handleSubmit = (e, {value}) => {
-    let path
-    if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {
-      path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
-    } else {
-      path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}`
-    }
-    console.log(path)
-    this.props.getData(path)
-  }
-
   render() {
-    const yellow200 = '#FFF59D'
-    const deepOrange600 = '#F4511E'
-    const lime300 = '#DCE775'
-    const lightGreen500 = '#8BC34A'
-    const teal700 = '#00796B'
-    const cyan900 = '#006064'
-    const colors = [
-      deepOrange600,
-      yellow200,
-      lime300,
-      lightGreen500,
-      teal700,
-      cyan900,
-    ]
     if (
       this.props.currentView.officerData &&
       this.props.currentView.subjectData
@@ -89,138 +38,8 @@ class Intro extends React.Component {
             style={{height: '100vh', margin: '10px'}}
           >
             <Grid.Row textAlign="center">
-              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-                <VictoryChart domainPadding={20}>
-                  <VictoryAxis
-                    independentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryAxis
-                    dependentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryStack colorScale={colors}>
-                    {this.props.currentView.officerData.map((item) => (
-                      <VictoryBar
-                        key={item.id}
-                        data={[
-                          {
-                            x: item.injuryType.type,
-                            y: item.onDuty
-                              ? item.onDuty
-                              : 0 + item.offDuty
-                              ? item.offDuty
-                              : 0,
-                          },
-                        ]}
-                        labels={() => `${item.command.commandName}`}
-                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                      />
-                    ))}
-                    {this.props.currentView.subjectData.map((item) => (
-                      <VictoryBar
-                        key={item.id}
-                        data={[
-                          {
-                            x: item.injuryType.type,
-                            y: item.onDuty
-                              ? item.onDuty
-                              : 0 + item.offDuty
-                              ? item.offDuty
-                              : 0,
-                          },
-                        ]}
-                        labels={() => `${item.command.commandName}`}
-                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                      />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    name="fullMenuSelection"
-                    selection
-                    placeholder="Select Chart"
-                    onChange={this.handleDropdownChange}
-                    style={{background: 'white'}}
-                    options={this.props.fullMenuOptions}
-                  />
-                </Grid.Row>
-                {this.props.timeOptions ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      selection
-                      name="timeSelection"
-                      onChange={this.handleDropdownChange}
-                      placeholder="Select Time"
-                      style={{background: 'white'}}
-                      options={this.props.timeOptions}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      name="dutySelection"
-                      selection
-                      style={{background: 'white'}}
-                      placeholder="Select Duty"
-                      options={this.props.dutyOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                {this.props.commandOptions &&
-                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      placeholder="Select Commands"
-                      name="commandSelection"
-                      fluid
-                      search
-                      selection
-                      style={{background: 'white'}}
-                      options={this.props.commandOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                <Grid.Row>
-                  <Button onClick={this.handleSubmit} fluid color="black">
-                    Get Chart
-                  </Button>
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Save JPEG"
-                    fluid
-                    color="black"
-                    icon="picture"
-                  />
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Copy Data"
-                    onClick={this.handleCopyData}
-                    fluid
-                    color="black"
-                    icon="copy"
-                  />
-                </Grid.Row>
-              </Grid.Column>
+              <LeftNavAllInjuries />
+              <RightNavBar />
             </Grid.Row>
           </Grid>
         )
@@ -236,121 +55,8 @@ class Intro extends React.Component {
             style={{height: '100vh', margin: '10px'}}
           >
             <Grid.Row textAlign="center">
-              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-                <VictoryChart domainPadding={20}>
-                  <VictoryAxis
-                    independentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryAxis
-                    dependentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryStack colorScale={colors}>
-                    {this.props.currentView.subjectData.map((item) => (
-                      <VictoryBar
-                        key={item.id}
-                        data={[
-                          {
-                            x: item.injuryType.type,
-                            y: item.onDuty
-                              ? item.onDuty
-                              : 0 + item.offDuty
-                              ? item.offDuty
-                              : 0,
-                          },
-                        ]}
-                        labels={() => `${item.command.commandName}`}
-                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                      />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    name="fullMenuSelection"
-                    selection
-                    placeholder="Select Chart"
-                    onChange={this.handleDropdownChange}
-                    style={{background: 'white'}}
-                    options={this.props.fullMenuOptions}
-                  />
-                </Grid.Row>
-                {this.props.timeOptions ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      selection
-                      name="timeSelection"
-                      onChange={this.handleDropdownChange}
-                      placeholder="Select Time"
-                      style={{background: 'white'}}
-                      options={this.props.timeOptions}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      name="dutySelection"
-                      selection
-                      style={{background: 'white'}}
-                      placeholder="Select Duty"
-                      options={this.props.dutyOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                {this.props.commandOptions &&
-                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      placeholder="Select Commands"
-                      name="commandSelection"
-                      fluid
-                      search
-                      selection
-                      style={{background: 'white'}}
-                      options={this.props.commandOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                <Grid.Row>
-                  <Button onClick={this.handleSubmit} fluid color="black">
-                    Get Chart
-                  </Button>
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Save JPEG"
-                    fluid
-                    color="black"
-                    icon="picture"
-                  />
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Copy Data"
-                    onClick={this.handleCopyData}
-                    fluid
-                    color="black"
-                    icon="copy"
-                  />
-                </Grid.Row>
-              </Grid.Column>
+              <LeftNavSubjectInjuries />
+              <RightNavBar />
             </Grid.Row>
           </Grid>
         )
@@ -366,121 +72,8 @@ class Intro extends React.Component {
             style={{height: '100vh', margin: '10px'}}
           >
             <Grid.Row textAlign="center">
-              <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-                <VictoryChart domainPadding={20}>
-                  <VictoryAxis
-                    independentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryAxis
-                    dependentAxis
-                    style={{tickLabels: {fontSize: 10}}}
-                  />
-                  <VictoryStack colorScale={colors}>
-                    {this.props.currentView.officerData.map((item) => (
-                      <VictoryBar
-                        key={item.id}
-                        data={[
-                          {
-                            x: item.injuryType.type,
-                            y: item.onDuty
-                              ? item.onDuty
-                              : 0 + item.offDuty
-                              ? item.offDuty
-                              : 0,
-                          },
-                        ]}
-                        labels={() => `${item.command.commandName}`}
-                        labelComponent={<VictoryTooltip flyoutWidth={90} />}
-                      />
-                    ))}
-                  </VictoryStack>
-                </VictoryChart>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    name="fullMenuSelection"
-                    selection
-                    placeholder="Select Chart"
-                    onChange={this.handleDropdownChange}
-                    style={{background: 'white'}}
-                    options={this.props.fullMenuOptions}
-                  />
-                </Grid.Row>
-                {this.props.timeOptions ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      selection
-                      name="timeSelection"
-                      onChange={this.handleDropdownChange}
-                      placeholder="Select Time"
-                      style={{background: 'white'}}
-                      options={this.props.timeOptions}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      name="dutySelection"
-                      selection
-                      style={{background: 'white'}}
-                      placeholder="Select Duty"
-                      options={this.props.dutyOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                {this.props.commandOptions &&
-                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      placeholder="Select Commands"
-                      name="commandSelection"
-                      fluid
-                      search
-                      selection
-                      style={{background: 'white'}}
-                      options={this.props.commandOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                <Grid.Row>
-                  <Button onClick={this.handleSubmit} fluid color="black">
-                    Get Chart
-                  </Button>
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Save JPEG"
-                    fluid
-                    color="black"
-                    icon="picture"
-                  />
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Copy Data"
-                    onClick={this.handleCopyData}
-                    fluid
-                    color="black"
-                    icon="copy"
-                  />
-                </Grid.Row>
-              </Grid.Column>
+              <LeftNavOfficerInjuries />
+              <RightNavBar />
             </Grid.Row>
           </Grid>
         )
@@ -499,90 +92,7 @@ class Intro extends React.Component {
               <Grid.Column height="50vh" verticalAlign="middle" width={12}>
                 No injuries/force use found!
               </Grid.Column>
-              <Grid.Column width={4}>
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    name="fullMenuSelection"
-                    selection
-                    placeholder="Select Chart"
-                    onChange={this.handleDropdownChange}
-                    style={{background: 'white'}}
-                    options={this.props.fullMenuOptions}
-                  />
-                </Grid.Row>
-                {this.props.timeOptions ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      selection
-                      name="timeSelection"
-                      onChange={this.handleDropdownChange}
-                      placeholder="Select Time"
-                      style={{background: 'white'}}
-                      options={this.props.timeOptions}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-                {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      fluid
-                      name="dutySelection"
-                      selection
-                      style={{background: 'white'}}
-                      placeholder="Select Duty"
-                      options={this.props.dutyOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                {this.props.commandOptions &&
-                this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                  <Grid.Row>
-                    <Dropdown
-                      placeholder="Select Commands"
-                      name="commandSelection"
-                      fluid
-                      search
-                      selection
-                      style={{background: 'white'}}
-                      options={this.props.commandOptions}
-                      onChange={this.handleDropdownChange}
-                    />
-                  </Grid.Row>
-                ) : (
-                  ''
-                )}
-
-                <Grid.Row>
-                  <Button onClick={this.handleSubmit} fluid color="black">
-                    Get Chart
-                  </Button>
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Save JPEG"
-                    fluid
-                    color="black"
-                    icon="picture"
-                  />
-                </Grid.Row>
-                <Grid.Row>
-                  <Button
-                    label="Copy Data"
-                    onClick={this.handleCopyData}
-                    fluid
-                    color="black"
-                    icon="copy"
-                  />
-                </Grid.Row>
-              </Grid.Column>
+              <RightNavBar />
             </Grid.Row>
           </Grid>
         )
@@ -596,88 +106,8 @@ class Intro extends React.Component {
           style={{height: '100vh', margin: '10px'}}
         >
           <Grid.Row textAlign="center">
-            <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-              Please select data!
-            </Grid.Column>
-            <Grid.Column width={4}>
-              <Grid.Row>
-                <Dropdown
-                  fluid
-                  name="fullMenuSelection"
-                  selection
-                  placeholder="Select Chart"
-                  onChange={this.handleDropdownChange}
-                  style={{background: 'white'}}
-                  options={this.props.fullMenuOptions}
-                />
-              </Grid.Row>
-              {this.props.timeOptions ? (
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    selection
-                    name="timeSelection"
-                    onChange={this.handleDropdownChange}
-                    placeholder="Select Time"
-                    style={{background: 'white'}}
-                    options={this.props.timeOptions}
-                  />
-                </Grid.Row>
-              ) : (
-                ''
-              )}
-              {this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                <Grid.Row>
-                  <Dropdown
-                    fluid
-                    name="dutySelection"
-                    selection
-                    style={{background: 'white'}}
-                    placeholder="Select Duty"
-                    options={this.props.dutyOptions}
-                    onChange={this.handleDropdownChange}
-                  />
-                </Grid.Row>
-              ) : (
-                ''
-              )}
-
-              {this.props.commandOptions &&
-              this.state.fullMenuSelection !== 'incidentsBasisEncounter' ? (
-                <Grid.Row>
-                  <Dropdown
-                    placeholder="Select Commands"
-                    name="commandSelection"
-                    fluid
-                    search
-                    selection
-                    style={{background: 'white'}}
-                    options={this.props.commandOptions}
-                    onChange={this.handleDropdownChange}
-                  />
-                </Grid.Row>
-              ) : (
-                ''
-              )}
-
-              <Grid.Row>
-                <Button onClick={this.handleSubmit} fluid color="black">
-                  Get Chart
-                </Button>
-              </Grid.Row>
-              <Grid.Row>
-                <Button label="Save JPEG" fluid color="black" icon="picture" />
-              </Grid.Row>
-              <Grid.Row>
-                <Button
-                  label="Copy Data"
-                  onClick={this.handleCopyData}
-                  fluid
-                  color="black"
-                  icon="copy"
-                />
-              </Grid.Row>
-            </Grid.Column>
+            <Welcome />
+            <RightNavBar />
           </Grid.Row>
         </Grid>
       )
@@ -691,22 +121,19 @@ class Intro extends React.Component {
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.user.id,
-    fullMenuOptions: state.graphOption.fullMenuOptions,
-    dutyOptions: state.graphOption.dutyOptions,
-    timeOptions: state.graphOption.timeOptions,
-    commandOptions: state.graphOption.commandOptions,
+
     currentView: state.currentView,
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    handleClick() {
-      dispatch(logout())
-    },
-    getTimes: () => dispatch(getTimes()),
-    getCommands: () => dispatch(getCommands()),
-    getData: (path) => dispatch(getData(path)),
+    // handleClick() {
+    //   dispatch(logout())
+    // },
+    // getTimes: () => dispatch(getTimes()),
+    // getCommands: () => dispatch(getCommands()),
+    // getData: (path) => dispatch(getData(path)),
   }
 }
 
