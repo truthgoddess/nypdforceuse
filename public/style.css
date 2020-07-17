@@ -19,3 +19,12 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#rightColBackground {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    63deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(173, 207, 214, 0.5368522408963585) 100%
+  );
+}

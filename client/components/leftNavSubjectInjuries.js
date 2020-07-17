@@ -44,8 +44,23 @@ class LeftNavSubjectInjuries extends React.Component {
                       : 0,
                   },
                 ]}
-                labels={() => `${item.command.commandName}`}
-                labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                barWidth={10}
+                labels={() =>
+                  `${item.timeFrame.year}, Q${item.timeFrame.quarter}, count:${
+                    item.onDuty
+                      ? item.onDuty
+                      : 0 + item.offDuty
+                      ? item.offDuty
+                      : 0
+                  }, ${item.command.commandName}`
+                }
+                labelComponent={
+                  <VictoryTooltip
+                    flyoutStyle={{fill: 'white'}}
+                    style={{fontSize: 5}}
+                    flyoutPadding={5}
+                  />
+                }
               />
             ))}
           </VictoryStack>

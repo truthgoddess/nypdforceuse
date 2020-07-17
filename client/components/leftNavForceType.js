@@ -30,6 +30,17 @@ class LeftNavForceType extends React.Component {
           <VictoryStack colorScale={colors}>
             {this.props.currentView.forceTypeData.map((item) => (
               <VictoryBar
+                categories={{
+                  x: [
+                    'Physical Force',
+                    'Electrical Weapon',
+                    'Impact Weapon',
+                    'Firearm',
+                    'OC Spray',
+                    'Restraining Mesh Blanket',
+                    'Police Canine',
+                  ],
+                }}
                 key={item.id}
                 data={[
                   {
