@@ -126,17 +126,13 @@ class RightNavBar extends React.Component {
             Get Chart
           </Button>
         </Grid.Row>
-        <Grid.Row>
+        {/* <Grid.Row>
           <Button label="Save JPEG" fluid color="black" icon="picture" />
-        </Grid.Row>
+        </Grid.Row> */}
         <Grid.Row>
-          <Button
-            label="Copy Data"
-            onClick={this.handleCopyData}
-            fluid
-            color="black"
-            icon="copy"
-          />
+          <Button fluid onClick={this.handleCopyData} color="black">
+            Copy Data
+          </Button>
         </Grid.Row>
       </Grid.Column>
     )
@@ -153,7 +149,7 @@ const mapState = (state) => {
     dutyOptions: state.graphOption.dutyOptions,
     timeOptions: state.graphOption.timeOptions,
     commandOptions: state.graphOption.commandOptions,
-    //currentView: state.currentView,
+    currentView: state.currentView,
   }
 }
 
