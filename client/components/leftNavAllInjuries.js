@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import store from '../store'
-import {Grid, Dropdown, Button, Form, Select, Item} from 'semantic-ui-react'
+import {
+  Grid,
+  Dropdown,
+  Button,
+  Form,
+  Select,
+  Item,
+  Header,
+} from 'semantic-ui-react'
 import {
   VictoryBar,
   VictoryChart,
@@ -28,6 +36,8 @@ class LeftNavAllInjuries extends React.Component {
           }}
           domainPadding={20}
         >
+          <VictoryLabel x={25} y={14} text="NYPD Force Use" />
+          <VictoryLabel x={25} y={34} text="Subject and Officer Injuries" />
           <VictoryAxis independentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryStack colorScale={colors}>

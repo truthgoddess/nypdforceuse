@@ -26,6 +26,8 @@ class LeftNavSubjectInjuries extends React.Component {
           }}
           domainPadding={20}
         >
+          <VictoryLabel x={25} y={14} text="NYPD Force Use" />
+          <VictoryLabel x={25} y={34} text="Subject Injuries" />
           <VictoryAxis independentAxis style={{tickLabels: {fontSize: 10}}} />
           <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 10}}} />
           <VictoryStack colorScale={colors}>

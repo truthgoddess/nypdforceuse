@@ -24,10 +24,12 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
           style={{
             background: {fill: '#adcfd6'},
           }}
-          padding={{top: 10, bottom: 20, left: 150, right: 50}}
+          padding={{top: 60, bottom: 20, left: 150, right: 50}}
           horizontal
           domainPadding={20}
         >
+          <VictoryLabel x={25} y={14} text="NYPD Force Use" />
+          <VictoryLabel x={25} y={34} text="Incidents Basis for Encounter" />
           <VictoryAxis independentAxis style={{tickLabels: {fontSize: 5}}} />
           <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryStack colorScale={colors}>
