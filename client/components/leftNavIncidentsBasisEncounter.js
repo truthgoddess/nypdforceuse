@@ -18,14 +18,10 @@ import {colors} from '../utility'
 
 class LeftNavIncidentsBasisEncounter extends React.Component {
   render() {
-    console.log(
-      'trying to render',
-      this.props.currentView.incidentBasisEncounterData
-    )
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
         <VictoryChart
-          padding={{top: 10, bottom: 20, left: 150, right: 10}}
+          padding={{top: 10, bottom: 20, left: 150, right: 50}}
           horizontal
           domainPadding={20}
         >
