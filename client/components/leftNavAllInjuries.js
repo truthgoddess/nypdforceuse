@@ -3,7 +3,15 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import store from '../store'
-import {Grid, Dropdown, Button, Form, Select, Item} from 'semantic-ui-react'
+import {
+  Grid,
+  Dropdown,
+  Button,
+  Form,
+  Select,
+  Item,
+  Header,
+} from 'semantic-ui-react'
 import {
   VictoryBar,
   VictoryChart,
@@ -22,13 +30,28 @@ class LeftNavAllInjuries extends React.Component {
   render() {
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <VictoryChart domainPadding={20}>
-          <VictoryAxis independentAxis style={{tickLabels: {fontSize: 10}}} />
-          <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 10}}} />
+        <VictoryChart
+          style={{
+            background: {fill: '#adcfd6'},
+          }}
+          domainPadding={20}
+        >
+          <VictoryLabel x={25} y={14} text="NYPD Force Use" />
+          <VictoryLabel x={25} y={34} text="Subject and Officer Injuries" />
+          <VictoryAxis independentAxis style={{tickLabels: {fontSize: 8}}} />
+          <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryStack colorScale={colors}>
             {this.props.currentView.officerData.map((item) => (
               <VictoryBar
-                key={item.id}
+                categories={{
+                  x: [
+                    'Physical Injury',
+                    'Serious Physical Injury',
+                    'Substantial Physical Injury',
+                    'MOS Killed or Shot',
+                  ],
+                }}
+                key={`o${item.id}`}
                 data={[
                   {
                     x: item.injuryType.type,
@@ -39,13 +62,28 @@ class LeftNavAllInjuries extends React.Component {
                       : 0,
                   },
                 ]}
-                labels={() => `${item.command.commandName}`}
-                labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                barWidth={10}
+                labels={() =>
+                  `${item.timeFrame.year}, Q${item.timeFrame.quarter}, count:${
+                    item.onDuty
+                      ? item.onDuty
+                      : 0 + item.offDuty
+                      ? item.offDuty
+                      : 0
+                  }, ${item.command.commandName}, Officer Injuries`
+                }
+                labelComponent={
+                  <VictoryTooltip
+                    flyoutStyle={{fill: 'white'}}
+                    style={{fontSize: 5}}
+                    flyoutPadding={5}
+                  />
+                }
               />
             ))}
             {this.props.currentView.subjectData.map((item) => (
               <VictoryBar
-                key={item.id}
+                key={`s${item.id}`}
                 data={[
                   {
                     x: item.injuryType.type,
@@ -56,8 +94,23 @@ class LeftNavAllInjuries extends React.Component {
                       : 0,
                   },
                 ]}
-                labels={() => `${item.command.commandName}`}
-                labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                barWidth={10}
+                labels={() =>
+                  `${item.timeFrame.year}, Q${item.timeFrame.quarter}, count:${
+                    item.onDuty
+                      ? item.onDuty
+                      : 0 + item.offDuty
+                      ? item.offDuty
+                      : 0
+                  }, ${item.command.commandName}, Subject Injuries`
+                }
+                labelComponent={
+                  <VictoryTooltip
+                    flyoutStyle={{fill: 'white'}}
+                    style={{fontSize: 5}}
+                    flyoutPadding={5}
+                  />
+                }
               />
             ))}
           </VictoryStack>

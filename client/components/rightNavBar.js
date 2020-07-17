@@ -60,7 +60,7 @@ class RightNavBar extends React.Component {
 
   render() {
     return (
-      <Grid.Column width={4}>
+      <Grid.Column id="rightColBackground" width={4}>
         <Grid.Row>
           <Dropdown
             fluid
