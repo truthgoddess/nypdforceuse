@@ -60,7 +60,7 @@ class LeftNavAllInjuries extends React.Component {
                       : 0 + item.offDuty
                       ? item.offDuty
                       : 0
-                  }, ${item.command.commandName}`
+                  }, ${item.command.commandName}, Officer Injuries`
                 }
                 labelComponent={
                   <VictoryTooltip
@@ -92,7 +92,7 @@ class LeftNavAllInjuries extends React.Component {
                       : 0 + item.offDuty
                       ? item.offDuty
                       : 0
-                  }, ${item.command.commandName}`
+                  }, ${item.command.commandName}, Subject Injuries`
                 }
                 labelComponent={
                   <VictoryTooltip

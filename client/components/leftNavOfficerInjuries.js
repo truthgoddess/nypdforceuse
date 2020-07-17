@@ -20,7 +20,12 @@ class LeftNavOfficerInjuries extends React.Component {
   render() {
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <VictoryChart domainPadding={20}>
+        <VictoryChart
+          style={{
+            background: {fill: '#adcfd6'},
+          }}
+          domainPadding={20}
+        >
           <VictoryAxis independentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryStack colorScale={colors}>

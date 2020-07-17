@@ -21,6 +21,9 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
         <VictoryChart
+          style={{
+            background: {fill: '#adcfd6'},
+          }}
           padding={{top: 10, bottom: 20, left: 150, right: 50}}
           horizontal
           domainPadding={20}
