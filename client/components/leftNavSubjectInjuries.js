@@ -26,6 +26,13 @@ class LeftNavSubjectInjuries extends React.Component {
           <VictoryStack colorScale={colors}>
             {this.props.currentView.subjectData.map((item) => (
               <VictoryBar
+                categories={{
+                  x: [
+                    'Physical Injury',
+                    'Serious Physical Injury',
+                    'Substantial Physical Injury',
+                  ],
+                }}
                 key={item.id}
                 data={[
                   {

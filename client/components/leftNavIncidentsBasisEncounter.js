@@ -24,9 +24,13 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
     )
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <VictoryChart domainPadding={20}>
-          <VictoryAxis independentAxis style={{tickLabels: {fontSize: 10}}} />
-          <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 10}}} />
+        <VictoryChart
+          padding={{top: 10, bottom: 20, left: 150, right: 10}}
+          horizontal
+          domainPadding={20}
+        >
+          <VictoryAxis independentAxis style={{tickLabels: {fontSize: 5}}} />
+          <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
           <VictoryStack colorScale={colors}>
             {this.props.currentView.incidentBasisEncounterData.map((item) => (
               <VictoryBar
@@ -37,10 +41,20 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
                     y: item.count ? item.count : 0,
                   },
                 ]}
+                barWidth={10}
                 labels={() =>
-                  `${item.timeFrame.year}, Q${item.timeFrame.quarter}`
+                  `${item.timeFrame.year}, Q${item.timeFrame.quarter}, count:${
+                    item.count ? item.count : 0
+                  }`
                 }
-                labelComponent={<VictoryTooltip flyoutWidth={90} />}
+                labelComponent={
+                  <VictoryTooltip
+                    flyoutStyle={{fill: 'white'}}
+                    style={{fontSize: 5}}
+                    flyoutPadding={5}
+                    flyoutWidth={90}
+                  />
+                }
               />
             ))}
           </VictoryStack>

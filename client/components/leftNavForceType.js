@@ -20,7 +20,7 @@ class LeftNavForceType extends React.Component {
   render() {
     return (
       <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-        <VictoryChart domainPadding={20}>
+        <VictoryChart horizontal domainPadding={20}>
           <VictoryAxis independentAxis style={{tickLabels: {fontSize: 10}}} />
           <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 10}}} />
           <VictoryStack colorScale={colors}>
