@@ -8,6 +8,7 @@ import {CommentActions} from 'semantic-ui-react'
 
 const SET_COMMAND_OPTIONS = 'SET_COMMAND_OPTIONS'
 const SET_TIME_OPTIONS = 'SET_TIME_OPTIONS'
+const SET_CURRENT_SELECTIONS = 'SET_CURRENT_SELECTIONS'
 
 /**
  * INITIAL STATE
@@ -40,6 +41,12 @@ const defaultGraphOption = {
     {key: 'offDuty', text: 'Off Duty', value: 'off'},
   ],
   commandOptions: [],
+  currentSelections: {
+    fullMenuSelection: '',
+    timeSelection: '',
+    dutySelection: '',
+    commandSelection: '',
+  },
   //need to get from DB
 }
 
@@ -55,6 +62,11 @@ const setCommandOptions = (commands) => ({
 const setTimeOptions = (times) => ({
   type: SET_TIME_OPTIONS,
   times,
+})
+
+const setCurrentSelection = (selections) => ({
+  type: SET_CURRENT_SELECTIONS,
+  selections,
 })
 
 /**
@@ -81,6 +93,15 @@ export const getCommands = () => async (dispatch) => {
   }
 }
 
+export const getSelections = (selections) => async (dispatch) => {
+  try {
+    console.log('running getSelections')
+    dispatch(setCurrentSelection(selections))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -90,6 +111,8 @@ export default function (state = defaultGraphOption, action) {
       return {...state, commandOptions: action.commands}
     case SET_TIME_OPTIONS:
       return {...state, timeOptions: action.times}
+    case SET_CURRENT_SELECTIONS:
+      return {...state, currentSelections: action.selections}
     default:
       return state
   }

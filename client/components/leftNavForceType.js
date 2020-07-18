@@ -68,7 +68,7 @@ class LeftNavForceType extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             padding={{top: 60, bottom: 20, left: 150, right: 50}}
             horizontal
@@ -159,7 +159,7 @@ class LeftNavForceType extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             padding={{top: 60, bottom: 20, left: 150, right: 50}}
             horizontal

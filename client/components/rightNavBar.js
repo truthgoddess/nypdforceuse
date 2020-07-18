@@ -13,7 +13,7 @@ import {
   VictoryZoomContainer,
   VictoryAxis,
 } from 'victory'
-import {getTimes, getCommands} from '../store/graphOption'
+import {getTimes, getCommands, getSelections} from '../store/graphOption'
 import {getData} from '../store/currentView'
 import {copyToClipboard} from '../utility'
 
@@ -48,14 +48,19 @@ class RightNavBar extends React.Component {
   }
 
   handleSubmit = (e, {value}) => {
-    console.log(this.props.currentView)
+    this.props.getSelections({
+      fullMenuOption: this.state.fullMenuSelection,
+      injuryOption: this.state.timeSelection,
+      dutyOption: this.state.dutySelection,
+      timeOption: this.state.timeSelection,
+    })
     let path
     if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
     } else {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}`
     }
-    console.log(path)
+
     this.props.getData(path)
   }
 
@@ -162,6 +167,7 @@ const mapDispatch = (dispatch) => {
     getTimes: () => dispatch(getTimes()),
     getCommands: () => dispatch(getCommands()),
     getData: (path) => dispatch(getData(path)),
+    getSelections: (selections) => dispatch(getSelections(selections)),
   }
 }
 

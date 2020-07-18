@@ -88,7 +88,7 @@ class LeftNavAllInjuries extends React.Component {
           <VictoryChart
             style={{
               background: {
-                fill: 'f1f8f9',
+                fill: 'F1F8F9',
               },
             }}
             domainPadding={20}
@@ -129,7 +129,7 @@ class LeftNavAllInjuries extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             domainPadding={20}
           >
