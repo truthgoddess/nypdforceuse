@@ -48,6 +48,7 @@ class RightNavBar extends React.Component {
   }
 
   handleSubmit = (e, {value}) => {
+    console.log(this.props.currentView)
     let path
     if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {
       path = `api/graphData/${this.state.fullMenuSelection}/${this.state.timeSelection}/${this.state.dutySelection}/${this.state.commandSelection}`
