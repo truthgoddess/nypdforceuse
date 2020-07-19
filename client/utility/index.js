@@ -4,6 +4,7 @@ let {colors} = require('./colors')
 let {totalInjuries} = require('./totalInjuries')
 let {totalForceUse} = require('./totalForceUse')
 let {totalIncidentsBasisEncounter} = require('./totalIncidentsBasisEncounter')
+let {makeTitle} = require('./makeTitle')
 let {settings} = require('./settings')
 module.exports = {
   helloClient,
@@ -13,4 +14,5 @@ module.exports = {
   settings,
   totalForceUse,
   totalIncidentsBasisEncounter,
+  makeTitle,
 }

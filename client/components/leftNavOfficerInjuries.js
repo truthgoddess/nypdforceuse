@@ -13,7 +13,7 @@ import {
   VictoryAxis,
 } from 'victory'
 
-import {colors, totalInjuries, settings} from '../utility'
+import {colors, totalInjuries, settings, makeTitle} from '../utility'
 
 class LeftNavOfficerInjuries extends React.Component {
   render() {
@@ -58,13 +58,20 @@ class LeftNavOfficerInjuries extends React.Component {
           <VictoryChart
             style={{
               background: {
-                fill: 'f1f8f9',
+                fill: 'F1F8F9',
               },
             }}
             domainPadding={20}
           >
             <VictoryLabel x={25} y={14} text="NYPD Force Use" />
-            <VictoryLabel x={25} y={34} text="Officer Injuries" />
+            <VictoryLabel
+              style={{
+                fontSize: 8,
+              }}
+              x={25}
+              y={34}
+              text={makeTitle(this.props.currentSelections)}
+            />
             <VictoryAxis independentAxis style={{tickLabels: {fontSize: 8}}} />
             <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
             <VictoryBar
@@ -83,13 +90,7 @@ class LeftNavOfficerInjuries extends React.Component {
                 data: {fill: colors[3], stroke: 'white', strokeWidth: 0.15},
               }}
               labels={({datum}) => datum.y}
-              labelComponent={
-                <VictoryTooltip
-                  flyoutStyle={{fill: 'white'}}
-                  style={{fontSize: 5}}
-                  flyoutPadding={5}
-                />
-              }
+              labelComponent={<VictoryLabel dy={-2} style={{fontSize: 5}} />}
             ></VictoryBar>
           </VictoryChart>
         </Grid.Column>
@@ -99,12 +100,19 @@ class LeftNavOfficerInjuries extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             domainPadding={20}
           >
             <VictoryLabel x={25} y={14} text="NYPD Force Use" />
-            <VictoryLabel x={25} y={34} text="Officer Injuries" />
+            <VictoryLabel
+              style={{
+                fontSize: 8,
+              }}
+              x={25}
+              y={34}
+              text={makeTitle(this.props.currentSelections)}
+            />
             <VictoryAxis independentAxis style={{tickLabels: {fontSize: 8}}} />
             <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
 
@@ -162,6 +170,7 @@ class LeftNavOfficerInjuries extends React.Component {
 const mapState = (state) => {
   return {
     currentView: state.currentView,
+    currentSelections: state.graphOption.currentSelections,
   }
 }
 
