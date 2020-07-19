@@ -49,10 +49,10 @@ class RightNavBar extends React.Component {
 
   handleSubmit = (e, {value}) => {
     this.props.getSelections({
-      fullMenuOption: this.state.fullMenuSelection,
-      injuryOption: this.state.timeSelection,
-      dutyOption: this.state.dutySelection,
-      timeOption: this.state.timeSelection,
+      fullMenuSelection: this.state.fullMenuSelection,
+      dutySelection: this.state.dutySelection,
+      timeSelection: this.state.timeSelection,
+      commandSelection: this.state.commandSelection,
     })
     let path
     if (this.state.fullMenuSelection !== 'incidentsBasisEncounter') {

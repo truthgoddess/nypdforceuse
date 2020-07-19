@@ -13,7 +13,12 @@ import {
   VictoryAxis,
 } from 'victory'
 
-import {colors, settings, totalIncidentsBasisEncounter} from '../utility'
+import {
+  colors,
+  settings,
+  totalIncidentsBasisEncounter,
+  makeTitle,
+} from '../utility'
 class LeftNavIncidentsBasisEncounter extends React.Component {
   render() {
     let dataLength = this.props.currentView.incidentBasisEncounterData.length
@@ -150,14 +155,21 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             padding={{top: 60, bottom: 20, left: 150, right: 50}}
             horizontal
             domainPadding={20}
           >
             <VictoryLabel x={25} y={14} text="NYPD Force Use" />
-            <VictoryLabel x={25} y={34} text="Incidents Basis for Encounter" />
+            <VictoryLabel
+              style={{
+                fontSize: 8,
+              }}
+              x={25}
+              y={34}
+              text={makeTitle(this.props.currentSelections)}
+            />
             <VictoryAxis independentAxis style={{tickLabels: {fontSize: 5}}} />
             <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
             <VictoryBar
@@ -189,52 +201,8 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
                 data: {fill: colors[3], stroke: 'white', strokeWidth: 0.15},
               }}
               labels={({datum}) => datum.y}
-              labelComponent={
-                <VictoryTooltip
-                  flyoutStyle={{fill: 'white'}}
-                  style={{fontSize: 5}}
-                  flyoutPadding={5}
-                />
-              }
+              labelComponent={<VictoryLabel dy={-2} style={{fontSize: 5}} />}
             ></VictoryBar>
-            {/* <VictoryStack colorScale={colors}>
-              {this.props.currentView.incidentBasisEncounterData.map((item) => (
-                <VictoryBar
-                  categories={{
-                    x: [
-                      'Physical Force',
-                      'Electrical Weapon',
-                      'Impact Weapon',
-                      'Firearm',
-                      'OC Spray',
-                      'Restraining Mesh Blanket',
-                      'Police Canine',
-                    ],
-                  }}
-                  key={item.id}
-                  data={[
-                    {
-                      x: item.encounterCategory.type,
-                      y: item.count ? item.count : 0,
-                    },
-                  ]}
-                  barWidth={10}
-                  labels={() =>
-                    `${item.timeFrame.year}, Q${
-                      item.timeFrame.quarter
-                    }, count:${item.count ? item.count : 0}`
-                  }
-                  labelComponent={
-                    <VictoryTooltip
-                      flyoutStyle={{fill: 'white'}}
-                      style={{fontSize: 5}}
-                      flyoutPadding={5}
-                      flyoutWidth={90}
-                    />
-                  }
-                />
-              ))}
-            </VictoryStack> */}
           </VictoryChart>
         </Grid.Column>
       )
@@ -243,14 +211,21 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart
             style={{
-              background: {fill: '#adcfd6'},
+              background: {fill: 'F1F8F9'},
             }}
             padding={{top: 60, bottom: 20, left: 150, right: 50}}
             horizontal
             domainPadding={20}
           >
             <VictoryLabel x={25} y={14} text="NYPD Force Use" />
-            <VictoryLabel x={25} y={34} text="Incidents Basis for Encounter" />
+            <VictoryLabel
+              style={{
+                fontSize: 8,
+              }}
+              x={25}
+              y={34}
+              text={makeTitle(this.props.currentSelections)}
+            />
             <VictoryAxis independentAxis style={{tickLabels: {fontSize: 5}}} />
             <VictoryAxis dependentAxis style={{tickLabels: {fontSize: 8}}} />
             <VictoryStack colorScale={colors}>
@@ -312,6 +287,7 @@ class LeftNavIncidentsBasisEncounter extends React.Component {
 const mapState = (state) => {
   return {
     currentView: state.currentView,
+    currentSelections: state.graphOption.currentSelections,
   }
 }
 
