@@ -102,6 +102,14 @@ export const getSelections = (selections) => async (dispatch) => {
   }
 }
 
+export const putData = (upload) => async () => {
+  try {
+    let {data} = await axios.post('/api/admin/upload', upload)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */

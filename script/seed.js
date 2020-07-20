@@ -16,12 +16,21 @@ const {
   InjuryType,
   EncounterCategory,
   ForceCategory,
+  User,
 } = require('../server/db/models')
 
 const db = require('../server/db')
 
 async function seed() {
   await db.sync({force: true})
+
+  await User.create({
+    firstName: 'Kate',
+    lastName: 'Norton',
+    email: 'katernorton@outlook.com',
+    isAdmin: true,
+    password: '12345',
+  })
 
   //officer injury seed
   await Promise.all(
