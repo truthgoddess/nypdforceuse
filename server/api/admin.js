@@ -20,7 +20,7 @@ const checkIfAdmin = (req, res, next) => {
 router.post('/uploadSubjectInjuries', checkIfAdmin, async (req, res, next) => {
   try {
     await batchCreateSubjectInjury(req.body)
-    res.status(201)
+    res.send()
   } catch (error) {
     next(error)
   }
@@ -41,7 +41,7 @@ router.post(
   async (req, res, next) => {
     try {
       await batchCreateIncidentsForceType(req.body)
-      res.status(201)
+      res.send()
     } catch (error) {
       next(error)
     }
@@ -54,7 +54,7 @@ router.post(
   async (req, res, next) => {
     try {
       await batchCreateIncidentsBasisEncounter(req.body)
-      res.status(201)
+      res.send()
     } catch (error) {
       next(error)
     }
