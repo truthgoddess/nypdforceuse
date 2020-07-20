@@ -3,24 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import store from '../store'
-import {
-  Grid,
-  Dropdown,
-  Button,
-  Form,
-  Select,
-  Item,
-  Radio,
-} from 'semantic-ui-react'
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryStack,
-  VictoryLabel,
-  VictoryTooltip,
-  VictoryZoomContainer,
-  VictoryAxis,
-} from 'victory'
+import axios from 'axios'
+import {Grid} from 'semantic-ui-react'
 
 import RightNavBar from './rightNavBar'
 
@@ -32,8 +16,28 @@ class Upload extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    console.log(e.target.dataType.value)
-    console.log(e.target.dataBox.value)
+    // console.log(e.target.dataType.value)
+    // console.log(e.target.dataBox.value)
+    let data = JSON.parse(e.target.dataBox.value)
+    let type = e.target.dataType.value
+    console.log(type)
+    switch (type) {
+      case 'subjectInjury':
+        axios.post('/api/admin/uploadSubjectInjuries', data)
+        break
+      case 'officerInjury':
+        console.log('in officer injury switch')
+        axios.post('/api/admin/uploadOfficerInjuries', data)
+        break
+      case 'incidentsForceType':
+        axios.post('/api/admin/uploadIncidentsForceType', data)
+        break
+      case 'incidentsBasisEncounter':
+        axios.post('/api/admin/uploadIncidentsBasisEncounter', data)
+        break
+      default:
+        console.log('Type Not Detected')
+    }
   }
 
   render() {
@@ -43,7 +47,7 @@ class Upload extends React.Component {
           <Grid.Column height="50vh" verticalAlign="middle" width={12}>
             {
               <form onSubmit={this.handleSubmit}>
-                <label htmlFor="dataType">Choose a car:</label>
+                <label htmlFor="dataType">Choose a dataType:</label>
                 <select name="dataType" id="dataType">
                   <option value="subjectInjury">subjectInjury</option>
                   <option value="officerInjury">officerInjury</option>
@@ -98,7 +102,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    putData: (data) => dispatch(data),
+    putData: (data, dataType) => dispatch(dataType, data),
     // handleClick() {
     //   dispatch(logout())
     // },
@@ -108,7 +112,7 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(mapState)(Upload)
+export default connect(mapState, mapDispatch)(Upload)
 
 /**
  * PROP TYPES

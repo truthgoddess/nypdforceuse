@@ -33,101 +33,101 @@ async function seed() {
   })
 
   //officer injury seed
-  await Promise.all(
-    officerInjuryData.map(async (item) => {
-      try {
-        let [timeFrame] = await TimeFrame.findOrCreate({
-          where: {year: item.year, quarter: item.quarter},
-        })
-        let [command] = await Command.findOrCreate({
-          where: {commandName: item.command},
-        })
-        let [injuryType] = await InjuryType.findOrCreate({
-          where: {type: item.officerInjury},
-        })
-        await OfficerInjury.create({
-          onDuty: item.onDuty,
-          offDuty: item.offDuty,
-          injuryTypeId: injuryType.id,
-          commandId: command.id,
-          timeFrameId: timeFrame.id,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    })
-  )
+  // await Promise.all(
+  //   officerInjuryData.map(async (item) => {
+  //     try {
+  //       let [timeFrame] = await TimeFrame.findOrCreate({
+  //         where: {year: item.year, quarter: item.quarter},
+  //       })
+  //       let [command] = await Command.findOrCreate({
+  //         where: {commandName: item.command},
+  //       })
+  //       let [injuryType] = await InjuryType.findOrCreate({
+  //         where: {type: item.officerInjury},
+  //       })
+  //       await OfficerInjury.create({
+  //         onDuty: item.onDuty,
+  //         offDuty: item.offDuty,
+  //         injuryTypeId: injuryType.id,
+  //         commandId: command.id,
+  //         timeFrameId: timeFrame.id,
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // )
 
-  //subjectInjury seed
-  await Promise.all(
-    subjectInjuryData.map(async (item) => {
-      try {
-        let [timeFrame] = await TimeFrame.findOrCreate({
-          where: {year: item.year, quarter: item.quarter},
-        })
-        let [command] = await Command.findOrCreate({
-          where: {commandName: item.command},
-        })
-        let [injuryType] = await InjuryType.findOrCreate({
-          where: {type: item.subjectInjury},
-        })
-        await SubjectInjury.create({
-          onDuty: item.onDuty,
-          offDuty: item.offDuty,
-          injuryTypeId: injuryType.id,
-          commandId: command.id,
-          timeFrameId: timeFrame.id,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    })
-  )
-  //incidentsBasisEncounter seed
-  await Promise.all(
-    incidentsForceTypeData.map(async (item) => {
-      try {
-        let [timeFrame] = await TimeFrame.findOrCreate({
-          where: {year: item.year, quarter: item.quarter},
-        })
-        let [command] = await Command.findOrCreate({
-          where: {commandName: item.command},
-        })
-        let [forceCategory] = await ForceCategory.findOrCreate({
-          where: {type: item.forceCategory},
-        })
-        await IncidentsForceType.create({
-          onDuty: item.onDuty,
-          offDuty: item.offDuty,
-          forceCategoryId: forceCategory.id,
-          commandId: command.id,
-          timeFrameId: timeFrame.id,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    })
-  )
-  //incidentsForceType seed
-  await Promise.all(
-    incidentsBasisEncounterData.map(async (item) => {
-      try {
-        let [timeFrame] = await TimeFrame.findOrCreate({
-          where: {year: item.year, quarter: item.quarter},
-        })
-        let [encounterCategory] = await EncounterCategory.findOrCreate({
-          where: {type: item.basisForEncounter},
-        })
-        await IncidentsBasisEncounter.create({
-          count: item.count,
-          encounterCategoryId: encounterCategory.id,
-          timeFrameId: timeFrame.id,
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    })
-  )
+  // //subjectInjury seed
+  // await Promise.all(
+  //   subjectInjuryData.map(async (item) => {
+  //     try {
+  //       let [timeFrame] = await TimeFrame.findOrCreate({
+  //         where: {year: item.year, quarter: item.quarter},
+  //       })
+  //       let [command] = await Command.findOrCreate({
+  //         where: {commandName: item.command},
+  //       })
+  //       let [injuryType] = await InjuryType.findOrCreate({
+  //         where: {type: item.subjectInjury},
+  //       })
+  //       await SubjectInjury.create({
+  //         onDuty: item.onDuty,
+  //         offDuty: item.offDuty,
+  //         injuryTypeId: injuryType.id,
+  //         commandId: command.id,
+  //         timeFrameId: timeFrame.id,
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // )
+  // //incidentsBasisEncounter seed
+  // await Promise.all(
+  //   incidentsForceTypeData.map(async (item) => {
+  //     try {
+  //       let [timeFrame] = await TimeFrame.findOrCreate({
+  //         where: {year: item.year, quarter: item.quarter},
+  //       })
+  //       let [command] = await Command.findOrCreate({
+  //         where: {commandName: item.command},
+  //       })
+  //       let [forceCategory] = await ForceCategory.findOrCreate({
+  //         where: {type: item.forceCategory},
+  //       })
+  //       await IncidentsForceType.create({
+  //         onDuty: item.onDuty,
+  //         offDuty: item.offDuty,
+  //         forceCategoryId: forceCategory.id,
+  //         commandId: command.id,
+  //         timeFrameId: timeFrame.id,
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // )
+  // //incidentsForceType seed
+  // await Promise.all(
+  //   incidentsBasisEncounterData.map(async (item) => {
+  //     try {
+  //       let [timeFrame] = await TimeFrame.findOrCreate({
+  //         where: {year: item.year, quarter: item.quarter},
+  //       })
+  //       let [encounterCategory] = await EncounterCategory.findOrCreate({
+  //         where: {type: item.basisForEncounter},
+  //       })
+  //       await IncidentsBasisEncounter.create({
+  //         count: item.count,
+  //         encounterCategoryId: encounterCategory.id,
+  //         timeFrameId: timeFrame.id,
+  //       })
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   })
+  // )
   console.log('db synced!')
 }
 
