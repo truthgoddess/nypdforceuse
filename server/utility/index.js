@@ -1,5 +1,15 @@
 const {helloServer} = require('./helloServer')
+const {
+  batchCreateSubjectInjury,
+  batchCreateIncidentsBasisEncounter,
+  batchCreateOfficerInjury,
+  batchCreateIncidentsForceType,
+} = require('./batchCreate')
 
 module.exports = {
-  helloServer
+  helloServer,
+  batchCreateIncidentsBasisEncounter,
+  batchCreateIncidentsForceType,
+  batchCreateOfficerInjury,
+  batchCreateSubjectInjury,
 }

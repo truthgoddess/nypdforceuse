@@ -7,6 +7,7 @@ const TimeFrame = require('./timeFrame')
 const InjuryType = require('./injuryType')
 const EncounterCategory = require('./encounterCategory')
 const ForceCategory = require('./forceCategory')
+const User = require('./user')
 
 Command.hasMany(SubjectInjury)
 SubjectInjury.belongsTo(Command)
@@ -41,4 +42,5 @@ module.exports = {
   InjuryType,
   EncounterCategory,
   ForceCategory,
+  User,
 }

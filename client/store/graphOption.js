@@ -102,6 +102,30 @@ export const getSelections = (selections) => async (dispatch) => {
   }
 }
 
+export const putData = (data, dataType) => async () => {
+  try {
+    switch (dataType) {
+      case 'subjectInjury':
+        await axios.post('/api/admin/uploadSubjectInjuries', data)
+        break
+      case 'officerInjuiry':
+        await axios.post('/api/admin/uploadOfficerInjuries', data)
+        break
+      case 'incidentsForceType':
+        await axios.post('/api/admin/uploadIncidentsForceType', data)
+        break
+      case 'incidentsBasisEncounter':
+        await axios.post('/api/admin/uploadIncidentsBasisEncounter', data)
+        break
+      default:
+        console.log('dataType not Found')
+    }
+    await axios.post('/api/admin/upload', upload)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /**
  * REDUCER
  */
