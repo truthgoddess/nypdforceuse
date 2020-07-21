@@ -7,14 +7,6 @@ const db = require('../server/db')
 async function seed() {
   await db.sync({force: true})
 
-  await User.create({
-    firstName: 'Kate',
-    lastName: 'Norton',
-    email: 'katernorton@outlook.com',
-    isAdmin: true,
-    password: '1g2Ik*iZJ40!',
-  })
-
   console.log('db synced!')
 }
 
