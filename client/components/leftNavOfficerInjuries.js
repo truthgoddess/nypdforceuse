@@ -96,6 +96,9 @@ class LeftNavOfficerInjuries extends React.Component {
         </Grid.Column>
       )
     } else {
+      this.props.currentView.officerData.forEach((item) => {
+        console.log(item)
+      })
       return (
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart

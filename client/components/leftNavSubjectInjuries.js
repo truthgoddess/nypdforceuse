@@ -79,10 +79,9 @@ class LeftNavSubjectInjuries extends React.Component {
                   'Physical Injury',
                   'Serious Physical Injury',
                   'Substantial Physical Injury',
-                  'MOS Killed or Shot',
                 ],
               }}
-              // key={item.id}
+              key="singleLeftNav"
               data={data}
               barWidth={10}
               style={{
@@ -95,6 +94,10 @@ class LeftNavSubjectInjuries extends React.Component {
         </Grid.Column>
       )
     } else {
+      this.props.currentView.subjectData.forEach((item) => {
+        console.log(item)
+      })
+      console.log('subjectData', this.props.currentView.subjectData)
       return (
         <Grid.Column height="50vh" verticalAlign="middle" width={12}>
           <VictoryChart

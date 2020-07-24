@@ -506,7 +506,7 @@ router.get('/:year/:quarter/allDuty/allCommand', async function (
     }
     res.json({
       officerData: [],
-      subjectData: [subjectInjuriesData],
+      subjectData: subjectInjuriesData,
     })
     console.log('api/graphData/subjectInjury/:year/:quarter/allDuty/allCommand')
   } catch (error) {
