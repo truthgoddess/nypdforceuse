@@ -1,18 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
-import {
-  Grid,
-  Dropdown,
-  Button,
-  Form,
-  Select,
-  Item,
-  Container,
-  Header,
-} from 'semantic-ui-react'
+
+import {Grid, Container, Header} from 'semantic-ui-react'
 
 class Welcome extends React.Component {
   render() {
@@ -22,30 +12,25 @@ class Welcome extends React.Component {
           <Header as="h2">NYPD Force Use Data Display and Provider</Header>
 
           <p>
-            THE NYPD BY LAW HAS TO MAKE AVAILABLE PUBLICLY ALL TYPES OF THINGS.
-            THEY DO THE BARE MINIMUM, FIND WAYS TO RESTRICT ACCESS, AND MAKE
-            THEIR DATA UNMANAGABLE.
-          </p>
-          <p>
             THIS APPLICATION DISPLAYS NYPD USE OF FORCE DATA (ORIGINAL DATA
             AVAILABLE ON{' '}
             <a href="https://www1.nyc.gov/site/nypd/stats/reports-analysis/use-of-force.page">
               THIS WEBSITE
             </a>
-            ) IN A MANNER THAT HELPS IT MAKE SENSE. SIMPLY SELECT A VIEW ABOVE
-            AND THEN CHOOSE THE OPTIONS ON THE RIGHT.
+            ) IN A MANNER THAT HELPS IT MAKE SENSE. SIMPLY SELECT OPTIONS FROM
+            THE DROP DOWN MENUS AND CLICK GET CHART.
           </p>
           <p>
             YOU CAN ALSO COPY THE DATA (JSON FORMAT) USED FOR THAT VIEW BY
-            PRESSING THE BUTTON PROVIDED ONCE A VIEW IS SELECTED. FEEL FREE TO
-            SCREEN SHOT THE GRAPHS FOR USE IN RESEARCH OR REPORTING.
+            PRESSING THE BUTTON PROVIDED ONCE A VIEW IS SELECTED. ALSO FEEL FREE
+            TO SCREENSHOT THE GRAPHS FOR USE IN RESEARCH OR REPORTING.
           </p>
           <p>
             HOPEFULLY, THIS WILL AID IN EFFORTS TO MAKE THE NYPD HAVE
             TRANSPARENCY LIKE OTHER NYC AGENCIES. PLEASE BE AWARE THAT THIS DATA
             WAS PROVIDED BY THE NYPD AND HAS NOT BEEN ALTERED (ONLY REARRANGED).
-            THE DISPLAY OF THIS DATA DOES NOT SPEAK TO ITS ACCURACY. THAT
-            QUESTION IS LEFT TO OTHERS.
+            THE DISPLAY OF THIS DATA DOES NOT SPEAK TO ITS ACCURACY. PLEASE
+            SELECT ALL FIELDS BEFORE GETTING CHART.
           </p>
         </Container>
       </Grid.Column>

@@ -75,7 +75,6 @@ const setCurrentSelection = (selections) => ({
 
 export const getTimes = () => async (dispatch) => {
   try {
-    console.log('running getTimes')
     let times = await axios.get('/api/menuData/timeFrames')
     dispatch(setTimeOptions(times.data))
   } catch (error) {
@@ -85,7 +84,6 @@ export const getTimes = () => async (dispatch) => {
 
 export const getCommands = () => async (dispatch) => {
   try {
-    console.log('running getCommands')
     let commands = await axios.get('/api/menuData/commands')
     dispatch(setCommandOptions(commands.data))
   } catch (error) {
@@ -95,7 +93,6 @@ export const getCommands = () => async (dispatch) => {
 
 export const getSelections = (selections) => async (dispatch) => {
   try {
-    console.log('running getSelections')
     dispatch(setCurrentSelection(selections))
   } catch (error) {
     console.log(error)
@@ -120,7 +117,6 @@ export const putData = (data, dataType) => async () => {
       default:
         console.log('dataType not Found')
     }
-    await axios.post('/api/admin/upload', upload)
   } catch (error) {
     console.log(error)
   }

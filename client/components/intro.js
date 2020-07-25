@@ -1,18 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
-import {Grid, Dropdown, Button, Form, Select, Item} from 'semantic-ui-react'
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryStack,
-  VictoryLabel,
-  VictoryTooltip,
-  VictoryZoomContainer,
-  VictoryAxis,
-} from 'victory'
+
+import {Grid} from 'semantic-ui-react'
 
 import RightNavBar from './rightNavBar'
 import LeftNavAllInjuries from './leftNavAllInjuries'
@@ -156,23 +146,8 @@ const mapState = (state) => {
   }
 }
 
-const mapDispatch = (dispatch) => {
-  return {
-    // handleClick() {
-    //   dispatch(logout())
-    // },
-    // getTimes: () => dispatch(getTimes()),
-    // getCommands: () => dispatch(getCommands()),
-    // getData: (path) => dispatch(getData(path)),
-  }
-}
-
-export default connect(mapState, mapDispatch)(Intro)
+export default connect(mapState)(Intro)
 
 /**
  * PROP TYPES
  */
-Intro.propTypes = {
-  //   handleClick: PropTypes.func.isRequired,
-  //   isLoggedIn: PropTypes.bool.isRequired
-}

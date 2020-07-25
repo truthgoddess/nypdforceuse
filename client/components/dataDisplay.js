@@ -32,7 +32,3 @@ export default connect(mapState, mapDispatch)(DataDisplay)
 /**
  * PROP TYPES
  */
-DataDisplay.propTypes = {
-  //   handleClick: PropTypes.func.isRequired,
-  //   isLoggedIn: PropTypes.bool.isRequired
-}

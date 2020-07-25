@@ -1,8 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
+
 import {Grid} from 'semantic-ui-react'
 import {
   VictoryBar,

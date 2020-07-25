@@ -10,6 +10,7 @@ const {
   ForceCategory,
 } = require('../db/models')
 
+//the following functions are used for the admin routes to put data in database
 async function batchCreateSubjectInjury(subjectInjuryData) {
   for (let i = 0; i < subjectInjuryData.length; i++) {
     let item = subjectInjuryData[i]
