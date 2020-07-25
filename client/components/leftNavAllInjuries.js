@@ -1,28 +1,16 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
-import {
-  Grid,
-  Dropdown,
-  Button,
-  Form,
-  Select,
-  Item,
-  Header,
-} from 'semantic-ui-react'
+
+import {Grid} from 'semantic-ui-react'
 import {
   VictoryBar,
   VictoryChart,
   VictoryStack,
   VictoryLabel,
   VictoryTooltip,
-  VictoryZoomContainer,
   VictoryAxis,
 } from 'victory'
-import {getTimes, getCommands} from '../store/graphOption'
-import {getData} from '../store/currentView'
 
 import {colors, totalInjuries, settings, makeTitle} from '../utility'
 

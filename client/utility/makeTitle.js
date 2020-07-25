@@ -50,7 +50,6 @@ function makeCommandPart(commandPartSeed) {
 }
 
 function makeTitle(currentSelections) {
-  console.log('curerntselection', currentSelections)
   let titlePart = []
   //make menu selection string
   titlePart.push(makeFullMenuPart(currentSelections.fullMenuSelection))

@@ -1,16 +1,5 @@
 const router = require('express').Router()
-const {
-  User,
-  Command,
-  EncounterCategory,
-  ForceCategory,
-  IncidentsBasisEncounter,
-  IncidentsForceType,
-  InjuryType,
-  OfficerInjury,
-  SubjectInjury,
-  TimeFrame,
-} = require('../db/models')
+const {Command, InjuryType, SubjectInjury, TimeFrame} = require('../db/models')
 module.exports = router
 
 //year, quarter, duty, command

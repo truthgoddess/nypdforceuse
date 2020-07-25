@@ -1,8 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
 import axios from 'axios'
 import {Grid} from 'semantic-ui-react'
 
@@ -16,8 +13,7 @@ class Upload extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    // console.log(e.target.dataType.value)
-    // console.log(e.target.dataBox.value)
+
     let data = JSON.parse(e.target.dataBox.value)
     let type = e.target.dataType.value
     console.log(type)
@@ -74,20 +70,6 @@ class Upload extends React.Component {
           <RightNavBar />
         </Grid.Row>
       </Grid>
-      //   <Grid celled padded columns={2} style={{height: '100vh', margin: '10px'}}>
-      //     <Grid.Column height="50vh" verticalAlign="middle" width={12}>
-      //       <Grid.Row textAlign="center">
-      //         <Form>
-      //           <Form.Field>
-      //             <label>Data</label>
-      //             <input placeholder="First Name" />
-      //           </Form.Field>
-      //           <Button type="submit">Submit</Button>
-      //         </Form>
-      //         <RightNavBar />
-      //       </Grid.Row>
-      //     </Grid.Column>
-      //   </Grid>
     )
   }
 }
@@ -103,12 +85,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     putData: (data, dataType) => dispatch(dataType, data),
-    // handleClick() {
-    //   dispatch(logout())
-    // },
-    // getTimes: () => dispatch(getTimes()),
-    // getCommands: () => dispatch(getCommands()),
-    // getData: (path) => dispatch(getData(path)),
   }
 }
 
@@ -117,7 +93,3 @@ export default connect(mapState, mapDispatch)(Upload)
 /**
  * PROP TYPES
  */
-Upload.propTypes = {
-  //   handleClick: PropTypes.func.isRequired,
-  //   isLoggedIn: PropTypes.bool.isRequired
-}

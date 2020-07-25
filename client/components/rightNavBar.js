@@ -1,18 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store from '../store'
-import {Grid, Dropdown, Button, Form, Select, Item} from 'semantic-ui-react'
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryStack,
-  VictoryLabel,
-  VictoryTooltip,
-  VictoryZoomContainer,
-  VictoryAxis,
-} from 'victory'
+import {Grid, Dropdown, Button} from 'semantic-ui-react'
 import {getTimes, getCommands, getSelections} from '../store/graphOption'
 import {getData} from '../store/currentView'
 import {copyToClipboard} from '../utility'
@@ -132,9 +120,7 @@ class RightNavBar extends React.Component {
             Get Chart
           </Button>
         </Grid.Row>
-        {/* <Grid.Row>
-          <Button label="Save JPEG" fluid color="black" icon="picture" />
-        </Grid.Row> */}
+
         <Grid.Row>
           <Button fluid onClick={this.handleCopyData} color="black">
             Copy Data
@@ -161,9 +147,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // handleClick() {
-    //   dispatch(logout())
-    // },
     getTimes: () => dispatch(getTimes()),
     getCommands: () => dispatch(getCommands()),
     getData: (path) => dispatch(getData(path)),
@@ -176,7 +159,3 @@ export default connect(mapState, mapDispatch)(RightNavBar)
 /**
  * PROP TYPES
  */
-RightNavBar.propTypes = {
-  //   handleClick: PropTypes.func.isRequired,
-  //   isLoggedIn: PropTypes.bool.isRequired
-}
