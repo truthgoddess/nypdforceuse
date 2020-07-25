@@ -32,6 +32,12 @@ class Welcome extends React.Component {
             THE DISPLAY OF THIS DATA DOES NOT SPEAK TO ITS ACCURACY. PLEASE
             SELECT ALL FIELDS BEFORE GETTING CHART.
           </p>
+          <p>
+            DEVELOPED BY{' '}
+            <a href="https://www.linkedin.com/in/katerobinanorton/">
+              KATE R NORTON
+            </a>
+          </p>
         </Container>
       </Grid.Column>
     )
